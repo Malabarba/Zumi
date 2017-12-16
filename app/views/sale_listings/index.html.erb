@@ -1,35 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Sale Listings</h1>
+<h1>Imóveis a Venda</h1>
+
+<% prop_cols = %i(type usable_size_m2 toilet_count bedroom_count floor) %>
 
 <table>
   <thead>
     <tr>
-      <th>Property</th>
-      <th>Type</th>
-      <th>Price cents</th>
-      <th>Minimum down payment cents</th>
-      <th>Furnished</th>
-      <th colspan="3"></th>
+      <th>Bairro</th>
+      <th>Preço</th>
+      <% prop_cols.each do |c| %>
+        <th><%= Property.human_attribute_name(c) %></th>
+      <% end %>
+      <th>Mobiliado?</th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @sale_listings.each do |sale_listing| %>
       <tr>
-        <td><%= sale_listing.property %></td>
-        <td><%= sale_listing.type %></td>
+        <td><%= sale_listing.property.address.neighborhood %></td>
         <td><%= sale_listing.price_cents %></td>
-        <td><%= sale_listing.minimum_down_payment_cents %></td>
+        <% prop_cols.each do |c| %>
+          <td><%= sale_listing.property.public_send(c) %></td>
+        <% end %>
         <td><%= sale_listing.furnished %></td>
         <td><%= link_to 'Show', sale_listing %></td>
-        <td><%= link_to 'Edit', edit_sale_listing_path(sale_listing) %></td>
-        <td><%= link_to 'Destroy', sale_listing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Sale Listing', new_sale_listing_path %>

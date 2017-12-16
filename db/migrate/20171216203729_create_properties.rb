@@ -15,7 +15,6 @@ class CreateProperties < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :properties, :address, unique: true
     add_index :properties, :toilet_count
     add_index :properties, :bath_count
     add_index :properties, :bedroom_count
