@@ -1,0 +1,20 @@
+pt:
+  activerecord:
+    models:
+      property:
+        one: 'Imóvel'
+        other: 'Imóveis'
+    attributes:
+      property: &property
+        type: 'Tipo de Imóvel'
+        lot_size_m2: 'Área total (m²)'
+        usable_size_m2: 'Área útil (m²)'
+        monthly_maintenance_costs: 'Custos com manutenção'
+        toilet_count: 'Número de banheiros'
+        bath_count: 'Número de banhos'
+        bedroom_count: 'Número de quartos'
+        age_in_years: 'Idade (em anos)'
+        floor: 'Andar'
+        building_height: 'Altura do Prédio'
+      sale_listing/property:
+        <<: *property

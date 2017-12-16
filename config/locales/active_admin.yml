@@ -1,0 +1,12 @@
+pt:
+  active_admin:
+    filters:
+      predicates:
+        from: de
+        to: até
+  activerecord:
+    models:
+      active_admin/comment:
+        zero: 'comentário'
+        one: 'comentário'
+        other: 'comentários'

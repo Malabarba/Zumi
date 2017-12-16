@@ -1,0 +1,5 @@
+pt:
+  mailers:
+    InvestmentMailer:
+      mailer: 'Investimento'
+      created_noninitial_mail: 'Investimento (não o primeiro)'

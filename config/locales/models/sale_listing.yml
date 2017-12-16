@@ -1,0 +1,15 @@
+pt:
+  activerecord:
+    models:
+      sale_listing:
+        one: 'Listagem de Venda'
+        other: 'Listagens de Venda'
+    attributes:
+      sale_listing: &sale_listing
+        description: 'Descrição'
+        price: 'Preço'
+        minimum_down_payment: 'Entrada mínima'
+        furnished: 'Mobiliado?'
+        published_at: 'Data de publicação'
+        deleted_at: 'Data de remoção'
+      
