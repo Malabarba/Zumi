@@ -20,5 +20,5 @@ ActiveAdmin.register SaleListing do
     end
   end
 
-  resource_action(:publish, title: 'Publicar', args: [:published_at])
+  resource_action(:publish, title: 'Publicar')
 end
