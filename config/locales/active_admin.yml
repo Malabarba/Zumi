@@ -1,5 +1,6 @@
-pt:
+pt-BR:
   active_admin:
+    dashboard: 'Painel'
     filters:
       predicates:
         from: de

@@ -1,4 +1,4 @@
-pt:
+pt-BR:
   activerecord:
     models:
       address:
@@ -14,5 +14,3 @@ pt:
         city: 'Cidade'
         state: 'Estado'
         address_type: 'Tipo de endereço'
-      property/address:
-        <<: *address

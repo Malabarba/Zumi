@@ -1,4 +1,4 @@
-pt:
+pt-BR:
   activerecord:
     models:
       sale_listing:
@@ -6,10 +6,11 @@ pt:
         other: 'Listagens de Venda'
     attributes:
       sale_listing: &sale_listing
-        description: 'Descrição'
-        price: 'Preço'
-        minimum_down_payment: 'Entrada mínima'
-        furnished: 'Mobiliado?'
-        published_at: 'Data de publicação'
         deleted_at: 'Data de remoção'
+        description: 'Descrição'
+        furnished: 'Mobiliado?'
+        minimum_down_payment: 'Entrada mínima'
+        property: Imóvel
+        price: 'Preço'
+        published_at: 'Data de publicação'
       

@@ -1,5 +1,5 @@
-pt:
-  devise:
+pt-BR:
+  devise-BR:
     confirmations:
       confirmed: "Sua conta foi confirmada com sucesso."
       send_instructions: "Você receberá um email para confirmar sua conta em alguns minutos."

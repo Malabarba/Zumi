@@ -1,4 +1,4 @@
-pt:
+pt-BR:
   activerecord:
     models:
       property:
@@ -6,6 +6,7 @@ pt:
         other: 'Imóveis'
     attributes:
       property: &property
+        address: 'Endereço'
         type: 'Tipo de Imóvel'
         lot_size_m2: 'Área total (m²)'
         usable_size_m2: 'Área útil (m²)'
