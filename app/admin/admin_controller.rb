@@ -51,7 +51,7 @@ module AdminController
         if resource.public_send(*msg)
           redirect_to_resource
         else
-          flash[:notice] = resource.errors.full_messages.to_sentence
+          flash[:alert] = resource.errors.full_messages.to_sentence
           if args
             render 'admin/action', locals: { permitted_params: args }
           else
@@ -61,6 +61,16 @@ module AdminController
       elsif request.get?
         render 'admin/action', locals: { permitted_params: args }
       end
+    end
+  end
+
+  def update_form(params)
+    permit_params(*params)
+
+    form do |f|
+      f.semantic_errors(*f.object.errors.keys)
+      f.inputs { AdminForm.make_inputs(f, params) }
+      f.actions
     end
   end
 end

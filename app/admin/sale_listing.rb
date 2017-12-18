@@ -3,15 +3,7 @@ require_dependency 'admin_controller.rb'
 ActiveAdmin.register SaleListing do
   extend AdminController
 
-  permit_params(*SaleListing.permitted_params)
-
-  form do |f|
-    f.semantic_errors(*f.object.errors.keys)
-    f.inputs do
-      AdminForm.make_inputs(f, SaleListing.permitted_params)
-    end
-    f.actions
-  end
+  update_form(SaleListing.permitted_params)
 
   index do
     id_column
