@@ -11,10 +11,9 @@ class SaleListing < PropertyListing
     admin: [:property, :price_cents, :furnished, :published_at, :deleted_at].freeze
   }.freeze
 
-  def publish!
-    errors.add(:root, 'já está publicado') if published?
-    errors.add(:root, 'foi publicado e removido') if deleted_at?
-    return false if errors.present?
+  defaction :publish,
+            errors: { :published? => 'já está publicado',
+                      :deleted_at? => 'foi publicado e removido' } do
     update(published_at: Time.zone.now)
   end
 end
