@@ -1,5 +1,11 @@
 pt-BR:
   activerecord:
+    errors:
+      models:
+        sale_listing:
+          attributes:
+            property_id:
+              taken: 'já tem uma listagem ativa'
     models:
       sale_listing:
         one: 'Listagem de Venda'
@@ -11,6 +17,7 @@ pt-BR:
         furnished: 'Mobiliado?'
         minimum_down_payment: 'Entrada mínima'
         property: Imóvel
+        property_id: Imóvel
         price: 'Preço'
         published_at: 'Data de publicação'
       
