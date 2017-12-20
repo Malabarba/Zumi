@@ -34,11 +34,11 @@ module AdminController
   def resource_action(action, title:, args: nil, link_data: nil)
     link_method = args ? :get : :patch
     action_item action, only: [:show] do
-      link_to title,
-              public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path),
-              { method: link_method, data: link_data }
-      # if authorized?(:publish, resource)
-      # end
+      if resource.may?(action)
+        link_to title,
+                public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path),
+                { method: link_method, data: link_data }
+      end
     end
 
     member_action action, method: [:patch, link_method].uniq do

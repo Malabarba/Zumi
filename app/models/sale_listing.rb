@@ -8,10 +8,4 @@ class SaleListing < PropertyListing
   INDEX_COLUMNS = {
     admin: [:property, :price_cents, :furnished, :published_at, :deleted_at].freeze
   }.freeze
-
-  defaction :publish,
-            errors: { :published? => 'já está publicado',
-                      :deleted_at? => 'foi publicado e removido' } do
-    update(published_at: Time.zone.now)
-  end
 end

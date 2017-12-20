@@ -11,6 +11,10 @@ class ApplicationRecord < ActiveRecord::Base
     self.class.model_name.param_key
   end
 
+  def may?(action)
+    public_send("may_#{action}?")
+  end
+
   def self.defaction(action, errors: {}, ability: nil, &block)
     define_method("may_#{action}?") do
       may = ability ? instance_eval(&ability) : true
