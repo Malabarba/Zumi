@@ -13,6 +13,10 @@ class User < ApplicationRecord
     "#{first_name} #{surname}"
   end
 
+  def admin?
+    true
+  end
+
   private
 
   def fix_common_user_mistakes

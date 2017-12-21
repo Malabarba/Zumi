@@ -24,10 +24,6 @@ class ActiveAdmin::ResourceController
               disposition: :inline,
               type: 'application/pdf'
   end
-
-  def current_user
-    current_admin_user
-  end
 end
 
 module AdminController
