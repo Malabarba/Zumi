@@ -9,6 +9,18 @@
   </head>
 
   <body>
+    <navigation>
+      <ul>
+        <% if current_user %>
+          <li><%= link_to('Admin', admin_root_path, title: "Admin") %></li>
+          <li><%= link_to('Editar meus dados', edit_user_registration_path, title: "Editar meus dados") %></li>
+          <li><%= link_to('Sair', destroy_user_session_path, method: :delete, title: "Sair") %></li>
+        <% else %>
+          <li><%= link_to('Entrar', new_user_session_path) %></li>
+          <li><%= link_to('Cadastre-se', new_user_registration_path) %></li>
+        <% end %>
+      </ul>
+    </navigation>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
