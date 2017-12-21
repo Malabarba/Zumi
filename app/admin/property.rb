@@ -1,3 +1,5 @@
+require_dependency 'admin_controller.rb'
+
 ActiveAdmin.register Property do
   extend AdminController
 
