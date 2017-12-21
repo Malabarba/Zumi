@@ -18,6 +18,10 @@ class Property < ApplicationRecord
      address_attributes: [:id, *Address.permitted_params]]
   end
 
+  INDEX_COLUMNS = {
+    admin: %i(address type toilet_count bath_count bedroom_count floor).freeze
+  }.freeze
+
   def title
     "Imóvel ##{id} - #{address&.to_s_short}"
   end

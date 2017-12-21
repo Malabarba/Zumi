@@ -7,15 +7,16 @@ pt-BR:
     attributes:
       property: &property
         address: 'Endereço'
-        type: 'Tipo de Imóvel'
-        lot_size_m2: 'Área total (m²)'
-        usable_size_m2: 'Área útil (m²)'
-        monthly_maintenance_costs: 'Custos com manutenção'
-        toilet_count: 'Número de banheiros'
-        bath_count: 'Número de banhos'
-        bedroom_count: 'Número de quartos'
         age_in_years: 'Idade (em anos)'
-        floor: 'Andar'
+        bath_count: 'Nº banhos'
+        bedroom_count: 'Nº quartos'
         building_height: 'Altura do Prédio'
+        floor: 'Andar'
+        lot_size_m2: 'Área total (m²)'
+        monthly_maintenance_costs: 'Custos com manutenção'
+        sale_listings: 'Listagens de Venda'
+        toilet_count: 'Nº banheiros'
+        type: 'Tipo de Imóvel'
+        usable_size_m2: 'Área útil (m²)'
       sale_listing/property:
         <<: *property

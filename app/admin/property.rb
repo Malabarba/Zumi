@@ -1,11 +1,12 @@
 ActiveAdmin.register Property do
-  permit_params(*Property.permitted_params)
+  extend AdminController
 
-  form do |f|
-    f.semantic_errors(*f.object.errors.keys)
-    f.inputs do
-      AdminForm.make_inputs(f, Property.permitted_params)
+  update_form(Property.permitted_params)
+
+  index do
+    id_column
+    Property::INDEX_COLUMNS[:admin].each do |c|
+      column(c)
     end
-    f.actions
   end
 end
