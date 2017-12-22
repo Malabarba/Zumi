@@ -8,15 +8,19 @@ class PropertyListing < ApplicationRecord
   belongs_to :property
   scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
 
+  def idle?
+    !published_at?
+  end
+
   def published?
-    published_at?
+    published_at? && !deleted?
   end
 
   def deleted?
     deleted_at?
   end
 
-  defaction :publish, ability: -> { !published? },
+  defaction :publish, ability: :idle?,
             errors: { :published? => 'já está publicado',
                       :deleted_at? => 'foi publicado e removido' } do
     update(published_at: Time.zone.now)
