@@ -14,5 +14,26 @@ module Imo
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    # config.api_only = false
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/admin/helpers  #{config.root}/lib/concerns #{config.root}/app/serializers/concerns)
+    config.time_zone = 'Brasilia'
+    config.encoding = 'utf-8'
+    config.to_prepare { Devise::Mailer.layout 'mail' }
+    # config.active_record.raise_in_transactional_callbacks = true
+    # config.assets.precompile += [
+    #   'active_admin/admin.js',
+    #   'admin/sisbacen.css',
+    #   'admin/requirers/receipt.css',
+    #   'admin/operations/receipt.css', 'admin/operations/reconciliation.css',
+    #   'documents/operation/credit_data.css', 'documents/operation/reconciliation.css',
+    #   'documents/operation/requirer_loan_receipt.css',
+    #   'documents/portfolio/contracts_report.css',
+    #   'documents/portfolio/reconciliation.css',
+    #   'documents/requirer/registration_file.css',
+    #   'documents/investment_receipt.css',
+    #   'documents/investment_registration_file.css',
+    #   'document.css'
+    # ]
   end
 end
