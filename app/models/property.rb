@@ -17,9 +17,12 @@ class Property < ApplicationRecord
     %i(address type toilet_count bath_count bedroom_count floor)
   end
 
+  include FilterableEnumerize
+
   has_many :sale_listings
   belongs_to :address
   money :condo_cost, allow_nil: true
+  enumerize :type, in: %i(studio apartment house lot)
 
   accepts_nested_attributes_for :address
 

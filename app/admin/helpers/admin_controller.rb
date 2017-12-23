@@ -15,6 +15,7 @@ module AdminController
           model.columns_hash.each do |k, adapter|
             next if k =~ /^id$|_(password|token)$/
             col = k.gsub(/_(cents|id)$/, '').to_sym
+            col = :"#{col}_text" if r.respond_to?("#{col}_text")
             row(col)
           end
         end

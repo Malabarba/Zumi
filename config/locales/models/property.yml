@@ -20,3 +20,10 @@ pt-BR:
         usable_size_m2: 'Área útil (m²)'
       sale_listing/property:
         <<: *property
+  enumerize:
+    property:
+      type:
+        apartment: Apartamento
+        house: Casa
+        studio: Studio
+        lot: Terreno
