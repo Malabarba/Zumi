@@ -1,4 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
+  has_paper_trail
+
   self.abstract_class = true
   # `type' is a very useful column name.
   self.inheritance_column = nil
