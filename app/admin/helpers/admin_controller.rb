@@ -7,12 +7,13 @@ module AdminController
 
       index do
         id_column
-        model.index_columns.each { |c| column(c) }
+        model.index_columns(current_user).each { |c| column(c) }
       end
 
       show do |r|
         attributes_table do
           model.columns_hash.each do |k, adapter|
+            next if k =~ /^id$|_(password|token)$/
             col = k.gsub(/_(cents|id)$/, '').to_sym
             row(col)
           end

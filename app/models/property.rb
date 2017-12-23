@@ -1,10 +1,4 @@
 class Property < ApplicationRecord
-  has_many :sale_listings
-  belongs_to :address
-  money :condo_cost, allow_nil: true
-
-  accepts_nested_attributes_for :address
-
   def self.permitted_params
     [:type,
      :lot_size_m2,
@@ -19,9 +13,15 @@ class Property < ApplicationRecord
      address_attributes: [:id, *Address.permitted_params]]
   end
 
-  def self.index_columns
+  set_index_columns do
     %i(address type toilet_count bath_count bedroom_count floor)
   end
+
+  has_many :sale_listings
+  belongs_to :address
+  money :condo_cost, allow_nil: true
+
+  accepts_nested_attributes_for :address
 
   def title
     "Imóvel ##{id} - #{address&.to_s_short}"

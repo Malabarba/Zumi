@@ -1,4 +1,16 @@
 class User < ApplicationRecord
+  def self.permitted_params
+    %i(email password password_confirmation first_name surname phone birth_date)
+  end
+
+  set_index_columns do |user|
+    if user&.admin?
+      %i(email cpf first_name surname current_sign_in_at sign_in_count created_at)
+    else
+      []
+    end
+  end
+
   include Tokenable
 
   # Include default devise modules. Others available are:
@@ -6,7 +18,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # validates :cpf, :first_name, :surname, presence: true
+  validates :cpf, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
   attr_readonly :cpf
 

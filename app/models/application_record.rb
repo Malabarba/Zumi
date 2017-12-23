@@ -13,6 +13,14 @@ class ApplicationRecord < ActiveRecord::Base
     self.class.model_name.param_key
   end
 
+  def self.set_index_columns(&block)
+    @index_columns_block = block
+  end
+
+  def self.index_columns(*args)
+    @index_columns_block.call(*args)
+  end
+
   def self.money(col, **opts)
     cents_col = :"#{col}_cents"
     monetize(cents_col, **opts)
