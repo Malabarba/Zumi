@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   set_index_columns do |user|
     if user&.admin?
-      %i(email cpf first_name surname current_sign_in_at sign_in_count created_at)
+      %i(email first_name surname current_sign_in_at sign_in_count created_at)
     else
       []
     end

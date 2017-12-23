@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'activeadmin'
 gem 'devise'
 gem 'enumerize'
+gem 'jquery-rails'
 gem 'money-rails'
 gem 'paper_trail'
 
