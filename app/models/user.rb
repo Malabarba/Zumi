@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Tokenable
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,11 +8,16 @@ class User < ApplicationRecord
 
   # validates :cpf, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
+  attr_readonly :cpf
 
   before_validation :fix_common_user_mistakes, on: :create
 
   def name
     "#{first_name} #{surname}"
+  end
+
+  def name=(s)
+    self.first_name, self.surname = (s || '').split(' ', 2)
   end
 
   def admin?

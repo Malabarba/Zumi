@@ -17,6 +17,7 @@ ActiveAdmin.register User do
   filter :created_at
 
   form do |f|
+    binding.pry
     f.inputs do
       f.input :email
       f.input :password
