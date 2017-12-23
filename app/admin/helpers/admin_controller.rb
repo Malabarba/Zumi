@@ -7,7 +7,16 @@ module AdminController
 
       index do
         id_column
-        model::INDEX_COLUMNS[:admin].each { |c| column(c) }
+        model.index_columns.each { |c| column(c) }
+      end
+
+      show do |r|
+        attributes_table do
+          model.columns_hash.each do |k, adapter|
+            col = k.gsub(/_(cents|id)$/, '').to_sym
+            row(col)
+          end
+        end
       end
 
       instance_exec(&block) if block_given?

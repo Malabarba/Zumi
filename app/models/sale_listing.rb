@@ -7,7 +7,9 @@ class SaleListing < PropertyListing
     [:property_id, :description, :price, :minimum_down_payment, :furnished]
   end
 
-  INDEX_COLUMNS = {
-    admin: [:property, :price, :furnished, :published_at, :deleted_at].freeze
-  }.freeze
+  def self.index_columns
+    base = %i(property price furnished published_at)
+    base << :deleted_at if current_user&.admin?
+    base
+  end
 end
