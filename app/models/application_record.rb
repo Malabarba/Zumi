@@ -13,6 +13,15 @@ class ApplicationRecord < ActiveRecord::Base
     self.class.model_name.param_key
   end
 
+  def self.money(col, **opts)
+    cents_col = :"#{col}_cents"
+    monetize(cents_col, **opts)
+    if col != cents_col && (name = human_attribute_name(col))
+      hash = {activerecord: {attributes: {model_name.param_key => {cents_col => "#{name} (em centavos)"}}}}
+      I18n.backend.store_translations(:'pt-BR', hash)
+    end
+  end
+
   def may?(action)
     public_send("may_#{action}?")
   end

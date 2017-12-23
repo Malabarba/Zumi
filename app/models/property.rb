@@ -1,6 +1,7 @@
 class Property < ApplicationRecord
   has_many :sale_listings
   belongs_to :address
+  money :condo_cost, allow_nil: true
 
   accepts_nested_attributes_for :address
 
@@ -8,7 +9,7 @@ class Property < ApplicationRecord
     [:type,
      :lot_size_m2,
      :usable_size_m2,
-     :monthly_maintenance_costs_cents,
+     :condo_cost,
      :toilet_count,
      :bath_count,
      :bedroom_count,
