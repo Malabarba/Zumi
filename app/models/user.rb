@@ -11,6 +11,7 @@ class User < ApplicationRecord
     end
   end
 
+  include RoleModel
   include Tokenable
 
   # Include default devise modules. Others available are:
@@ -18,11 +19,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates :cpf, :first_name, :surname, presence: true
+  # validates :cpf, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
   attr_readonly :cpf
 
   before_validation :fix_common_user_mistakes, on: :create
+  before_validation :set_default_role, on: :create
+
+  roles :buyer, :seller, :realtor, :admin
 
   def name
     "#{first_name} #{surname}"
@@ -32,11 +36,11 @@ class User < ApplicationRecord
     self.first_name, self.surname = (s || '').split(' ', 2)
   end
 
-  def admin?
-    true
-  end
-
   private
+
+  def set_default_role
+    self.roles = [:seller] if self.roles.blank?
+  end
 
   def fix_common_user_mistakes
     if email.present?

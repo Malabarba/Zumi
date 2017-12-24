@@ -39,6 +39,7 @@ gem 'enumerize'
 gem 'jquery-rails'
 gem 'money-rails'
 gem 'paper_trail'
+gem 'role_model'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
