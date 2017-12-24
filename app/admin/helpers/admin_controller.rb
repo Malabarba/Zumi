@@ -10,13 +10,23 @@ module AdminController
         model.index_columns(current_user).each { |c| column(c) }
       end
 
-      show do |r|
+      show do |resource|
         attributes_table do
           model.columns_hash.each do |k, adapter|
             next if k =~ /^id$|_(password|token)$/
             col = k.gsub(/_(cents|id)$/, '').to_sym
-            col = :"#{col}_text" if r.respond_to?("#{col}_text")
+            col = :"#{col}_text" if resource.respond_to?("#{col}_text")
             row(col)
+          end
+          tabs do
+            model.reflections.each do |k, ref|
+              next if ref.macro == :belongs_to || k == 'versions'
+              tab(model.human_attribute_name(k)) do
+                table_for(resource.public_send(k)) do
+                  ref.klass.index_columns(current_user).each { |c| column(c) }
+                end
+              end
+            end
           end
         end
       end
