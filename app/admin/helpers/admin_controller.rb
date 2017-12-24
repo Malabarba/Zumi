@@ -12,15 +12,23 @@ module AdminController
 
       show do |resource|
         attributes_table do
+          model.reflections.each do |k, ref|
+            row(k.to_sym) unless ref.macro == :has_many
+          end
           model.columns_hash.each do |k, adapter|
-            next if k =~ /^id$|_(password|token)$/
-            col = k.gsub(/_(cents|id)$/, '').to_sym
-            col = :"#{col}_text" if resource.respond_to?("#{col}_text")
-            row(col)
+            next if k =~ /^id$|_(password|token|id)$/
+            if  k == 'roles_mask'
+              row(:roles) { resource.roles.to_a }
+            else
+              col = k.gsub(/_(cents)$/, '').to_sym
+              col = :"#{col}_text" if resource.respond_to?("#{col}_text")
+              row(col)
+            end
           end
           tabs do
             model.reflections.each do |k, ref|
-              next if ref.macro == :belongs_to || k == 'versions'
+              next unless ref.macro == :has_many
+              next if k == 'versions'
               tab(model.human_attribute_name(k)) do
                 table_for(resource.public_send(k)) do
                   ref.klass.index_columns(current_user).each { |c| column(c) }
