@@ -12,17 +12,23 @@ pt-BR:
         other: 'Usuários'
     attributes:
       user: &user
-        email: Email
-        sign_in_count: 'Quantidade de logins'
-        current_sign_in_at: 'Hora do último login'
-        last_sign_in_at: 'Hora do penúltimo login'
-        current_sign_in_ip: 'IP do último login'
-        last_sign_in_ip: 'IP do penúltimo login'
-        confirmed_at: 'Confirmado em'
-        unconfirmed_email: 'Email não confirmado'
-        cpf: 'CPF'
-        first_name: 'Primeiro nome'
-        surname: 'Sobrenome'
-        phone: 'Telefone'
         birth_date: 'Data de nascimento'
+        confirmed_at: 'Confirmado em'
+        cpf: 'CPF'
+        current_sign_in_at: 'Hora do último login'
+        current_sign_in_ip: 'IP do último login'
+        email: Email
+        first_name: 'Primeiro nome'
+        last_sign_in_at: 'Hora do penúltimo login'
+        last_sign_in_ip: 'IP do penúltimo login'
+        phone: 'Telefone'
         roles: 'Papéis'
+        sign_in_count: 'Quantidade de logins'
+        surname: 'Sobrenome'
+        unconfirmed_email: 'Email não confirmado'
+  user:
+    roles:
+      admin: Administrador
+      buyer: Comprador
+      seller: Vendedor
+      realtor: Corretor
