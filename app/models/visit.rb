@@ -1,6 +1,6 @@
 class Visit < ApplicationRecord
   def self.permitted_params
-    %i(sale_listing buyer visitor at)
+    %i(sale_listing_id buyer_id visitor_id at)
   end
 
   set_index_columns do |user|
