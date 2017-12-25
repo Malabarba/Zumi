@@ -2,6 +2,9 @@ module AdminController
   def self.register(model, &block)
     ActiveAdmin.register(model) do
       extend AdminController::Helpers
+
+      actions :all, :except => :destroy
+
       @model = model
 
       update_form(model.permitted_params)
@@ -32,6 +35,7 @@ module AdminController
               next if k == 'versions'
               tab(model.human_attribute_name(k)) do
                 table_for(resource.public_send(k)) do
+                  column(ref.klass.model_name.human) { |a| link_to(a, [:admin, a]) }
                   ref.klass.index_columns(current_user).each { |c| column(c) }
                 end
               end
