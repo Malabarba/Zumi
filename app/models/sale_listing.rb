@@ -48,8 +48,4 @@ class SaleListing < ApplicationRecord
             errors: { :deleted_at? => 'já está removido' } do
     update(deleted_at: Time.zone.now)
   end
-
-  defaction :schedule_visit, ability: :published?, params: [:buyer_id, :at] do |args|
-    visits.create(**args)
-  end
 end
