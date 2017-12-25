@@ -21,6 +21,11 @@ class Property < ApplicationRecord
 
   has_many :sale_listings
   belongs_to :address
+  belongs_to :user, inverse_of: :properties
+  alias owner user
+
+  validates :address, :owner, :type, :toilet_count, :bath_count, :bedroom_count, :floor,
+            presence: true
   money :condo_cost, allow_nil: true
   enumerize :type, in: %i(studio apartment house lot)
 

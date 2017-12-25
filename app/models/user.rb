@@ -19,6 +19,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :properties, inverse_of: :user
+  has_many :sale_listings, through: :properties
+
   # validates :cpf, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
   attr_readonly :cpf
