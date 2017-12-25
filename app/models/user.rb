@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   has_many :properties, inverse_of: :user
   has_many :sale_listings, through: :properties
+  has_many :buy_visits, foreign_key: :buyer_id, class_name: 'Visit', inverse_of: :buyer
+  has_many :sale_visits, foreign_key: :visitor_id, class_name: 'Visit', inverse_of: :visitor
 
   # validates :cpf, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
