@@ -21,6 +21,10 @@ class SaleListing < ApplicationRecord
   money :price, allow_nil: true
   money :minimum_down_payment, allow_nil: true
 
+  def to_s
+    "#{price&.format} - #{property.title}"
+  end
+
   def idle?
     !published_at?
   end
