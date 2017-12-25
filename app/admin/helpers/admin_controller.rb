@@ -47,6 +47,10 @@ module AdminController
       instance_exec(&block) if block_given?
 
       # controller do
+      #   def new
+      #     super
+      #     binding.pry
+      #   end
 
       #   # def end_of_association_chain
       #   #   return super unless %w(show index).include?(request.params[:action])
