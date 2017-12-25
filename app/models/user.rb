@@ -29,7 +29,7 @@ class User < ApplicationRecord
   before_validation :fix_common_user_mistakes, on: :create
   before_validation :set_default_role, on: :create
 
-  roles :buyer, :seller, :realtor, :admin
+  roles :buyer, :seller, :visitor, :admin
 
   def name
     "#{first_name} #{surname}"

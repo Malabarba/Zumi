@@ -30,5 +30,6 @@ pt-BR:
     roles:
       admin: Administrador
       buyer: Comprador
-      seller: Vendedor
       realtor: Corretor
+      seller: Vendedor
+      visitor: Visitador
