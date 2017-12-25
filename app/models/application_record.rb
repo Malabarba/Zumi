@@ -48,17 +48,17 @@ class ApplicationRecord < ActiveRecord::Base
       @action_params[action] = params
       @action_may ||= {}
       @action_may[action] = proc do
-        return false unless ability.nil? || instance_eval(&ability)
+        next false unless ability.nil? || instance_eval(&ability)
         errors.each do |cond, error|
           next unless instance_eval(&cond)
           self.errors.add(:root, error)
-          return false
+          break false
         end
         true
       end
 
       define_method("#{action}!") do |*args|
-        return false unless may?(action)
+        next false unless may?(action)
         instance_exec(*args, &block)
       end
     end
