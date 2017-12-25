@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171224235322) do
+ActiveRecord::Schema.define(version: 20171225185954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,5 +126,19 @@ ActiveRecord::Schema.define(version: 20171224235322) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "visits", force: :cascade do |t|
+    t.bigint "sale_listing_id", null: false
+    t.bigint "buyer_id", null: false
+    t.bigint "visitor_id", null: false
+    t.datetime "at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["at"], name: "index_visits_on_at"
+    t.index ["buyer_id"], name: "index_visits_on_buyer_id"
+    t.index ["sale_listing_id"], name: "index_visits_on_sale_listing_id"
+    t.index ["visitor_id"], name: "index_visits_on_visitor_id"
+  end
+
   add_foreign_key "properties", "users"
+  add_foreign_key "visits", "sale_listings"
 end

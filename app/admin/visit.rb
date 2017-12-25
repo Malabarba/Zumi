@@ -1,0 +1,1 @@
+AdminController.register(Visit)
