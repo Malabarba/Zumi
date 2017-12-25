@@ -13,7 +13,7 @@ class Visit < ApplicationRecord
 
   belongs_to :listing, inverse_of: :visits
   belongs_to :buyer, class_name: 'User', inverse_of: :buy_visits
-  belongs_to :visitor, class_name: 'User', inverse_of: :sale_visits
+  belongs_to :visitor, optional: true, class_name: 'User', inverse_of: :sale_visits
 
   validates :listing, :buyer, :at, presence: true
   validate :availability

@@ -41,6 +41,10 @@ class User < ApplicationRecord
     self.first_name, self.surname = (s || '').split(' ', 2)
   end
 
+  def available?(at: _)
+    true
+  end
+
   private
 
   def set_default_role
