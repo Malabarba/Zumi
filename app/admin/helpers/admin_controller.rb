@@ -58,7 +58,7 @@ module AdminController
 
   module Helpers
     def resource_action(action, title:, args: nil, link_data: nil)
-      args ||= @model.action_params[action]
+      args ||= @model.action_params[action].presence
       link_method = args ? :get : :patch
       action_item action, only: [:show] do
         if resource.may?(action)
