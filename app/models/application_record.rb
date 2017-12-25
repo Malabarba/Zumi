@@ -36,26 +36,31 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def may?(action)
-    public_send("may_#{action}?")
+    instance_exec(self.class.action_may[action])
   end
 
-  def self.defaction(action, errors: {}, ability: nil, params: [], &block)
-    @action_params ||= {}
-    @action_params[action] = params
-    define_method("may_#{action}?") do
-      may = ability ? instance_eval(&ability) : true
-      return false unless may
-      errors.each do |cond, error|
-        next unless instance_eval(&cond)
-        self.errors.add(:root, error)
-        return false
-      end
-      true
-    end
+  class << self
+    attr_reader :action_params
+    attr_reader :action_may
 
-    define_method("#{action}!") do |*args|
-      return false unless public_send("may_#{action}?")
-      instance_exec(*args, &block)
+    def defaction(action, errors: {}, ability: nil, params: [], &block)
+      @action_params ||= {}
+      @action_params[action] = params
+      @action_may ||= {}
+      @action_may[action] = proc do
+        return false unless ability.nil? || instance_eval(&ability)
+        errors.each do |cond, error|
+          next unless instance_eval(&cond)
+          self.errors.add(:root, error)
+          return false
+        end
+        true
+      end
+
+      define_method("#{action}!") do |*args|
+        return false unless may?(action)
+        instance_exec(*args, &block)
+      end
     end
   end
 end

@@ -2,6 +2,7 @@ module AdminController
   def self.register(model, &block)
     ActiveAdmin.register(model) do
       extend AdminController::Helpers
+      @model = model
 
       update_form(model.permitted_params)
 
@@ -45,6 +46,7 @@ module AdminController
 
   module Helpers
     def resource_action(action, title:, args: nil, link_data: nil)
+      args ||= @model.action_params[action]
       link_method = args ? :get : :patch
       action_item action, only: [:show] do
         if resource.may?(action)

@@ -16,13 +16,13 @@ class Visit < ApplicationRecord
   belongs_to :visitor, class_name: 'User', inverse_of: :sale_visits
 
   validates :sale_listing, :buyer, :at, presence: true
-  validates :at, allow_blank: true, on_or_after: -> { Time.zone.now }
-  validates :availability
+  validate :availability
 
   private
 
   def availability
     return unless buyer && sale_listing && at
+    return add_error(:at, 'apenas a partir de amanhã') if at.to_date < Time.zone.tomorrow
     return add_error(:buyer, 'indisponível nesse horário') unless buyer.available?(at: at)
     return add_error(:sale_listing, 'indisponível nesse horário') unless sale_listing.available?(at: at)
   end
