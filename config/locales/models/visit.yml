@@ -1,0 +1,25 @@
+pt-BR:
+  activerecord:
+    errors:
+      models:
+        visit:
+          attributes:
+            owner:
+              required: 'não pode ficar em branco'
+    models:
+      visit:
+        one: 'Agendamento de Visita'
+        other: 'Agendamentos de Visita'
+    attributes:
+      visit: &visit
+        at: 'Horário'
+        buyer: 'Comprador'
+        status: 'Status'
+        visitor: 'Visitador'
+  enumerize:
+    visit:
+      status:
+        pending: 'Pendente'
+        confirmed: 'Confirmada'
+        canceled: 'Cancelada'
+        bailed: 'Não Apareceu'
