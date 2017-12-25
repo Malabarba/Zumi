@@ -13,6 +13,8 @@ pt-BR:
     attributes:
       user: &user
         birth_date: 'Data de nascimento'
+        buy_visits: 'Visitas como comprador'
+        sale_visits: 'Visitas como visitador'
         confirmed_at: 'Confirmado em'
         cpf: 'CPF'
         current_sign_in_at: 'Hora do último login'
@@ -22,7 +24,9 @@ pt-BR:
         last_sign_in_at: 'Hora do penúltimo login'
         last_sign_in_ip: 'IP do penúltimo login'
         phone: 'Telefone'
+        properties: 'Imóveis'
         roles: 'Papéis'
+        sale_listings: 'Listagens de venda'
         sign_in_count: 'Quantidade de logins'
         surname: 'Sobrenome'
         unconfirmed_email: 'Email não confirmado'
