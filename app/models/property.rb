@@ -1,6 +1,7 @@
 class Property < ApplicationRecord
   def self.permitted_params
-    [:type,
+    [:owner_id,
+     :type,
      :lot_size_m2,
      :usable_size_m2,
      :condo_cost,
@@ -21,10 +22,9 @@ class Property < ApplicationRecord
 
   has_many :sale_listings
   belongs_to :address
-  belongs_to :user, inverse_of: :properties
-  alias owner user
+  belongs_to :owner, class_name: 'User', inverse_of: :properties
 
-  validates :address, :owner, :type, :toilet_count, :bath_count, :bedroom_count, :floor,
+  validates :address, :type, :toilet_count, :bath_count, :bedroom_count, :floor,
             presence: true
   money :condo_cost, allow_nil: true
   enumerize :type, in: %i(studio apartment house lot)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171225185954) do
+ActiveRecord::Schema.define(version: 20171225201216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,13 +60,13 @@ ActiveRecord::Schema.define(version: 20171225185954) do
     t.integer "building_height"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "owner_id", null: false
     t.index ["address_id"], name: "index_properties_on_address_id"
     t.index ["bath_count"], name: "index_properties_on_bath_count"
     t.index ["bedroom_count"], name: "index_properties_on_bedroom_count"
+    t.index ["owner_id"], name: "index_properties_on_owner_id"
     t.index ["toilet_count"], name: "index_properties_on_toilet_count"
     t.index ["type"], name: "index_properties_on_type"
-    t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
   create_table "sale_listings", force: :cascade do |t|
@@ -139,6 +139,6 @@ ActiveRecord::Schema.define(version: 20171225185954) do
     t.index ["visitor_id"], name: "index_visits_on_visitor_id"
   end
 
-  add_foreign_key "properties", "users"
+  add_foreign_key "properties", "users", column: "owner_id"
   add_foreign_key "visits", "sale_listings"
 end

@@ -19,7 +19,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :properties, inverse_of: :user
+  has_many :properties, foreign_key: :owner_id, class_name: 'Property', inverse_of: :owner
   has_many :sale_listings, through: :properties
   has_many :buy_visits, foreign_key: :buyer_id, class_name: 'Visit', inverse_of: :buyer
   has_many :sale_visits, foreign_key: :visitor_id, class_name: 'Visit', inverse_of: :visitor

@@ -1,5 +1,11 @@
 pt-BR:
   activerecord:
+    errors:
+      models:
+        property:
+          attributes:
+            owner:
+              required: 'não pode ficar em branco'
     models:
       property:
         one: 'Imóvel'
