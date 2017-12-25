@@ -18,15 +18,15 @@
   </thead>
 
   <tbody>
-    <% @sale_listings.each do |sale_listing| %>
+    <% @listings.each do |listing| %>
       <tr>
-        <td><%= sale_listing.property.address.neighborhood %></td>
-        <td><%= sale_listing.price_cents %></td>
+        <td><%= listing.property.address.neighborhood %></td>
+        <td><%= listing.price_cents %></td>
         <% prop_cols.each do |c| %>
-          <td><%= sale_listing.property.public_send(c) %></td>
+          <td><%= listing.property.public_send(c) %></td>
         <% end %>
-        <td><%= sale_listing.furnished %></td>
-        <td><%= link_to 'Show', sale_listing %></td>
+        <td><%= listing.furnished %></td>
+        <td><%= link_to 'Show', listing %></td>
       </tr>
     <% end %>
   </tbody>

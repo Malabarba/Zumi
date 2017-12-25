@@ -1,6 +1,6 @@
-class CreateSaleListings < ActiveRecord::Migration[5.1]
+class CreateListings < ActiveRecord::Migration[5.1]
   def change
-    create_table :sale_listings do |t|
+    create_table :listings do |t|
       t.references :property, null: false, index: true
       t.text :description
       t.integer :price_cents

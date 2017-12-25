@@ -46,6 +46,19 @@ ActiveRecord::Schema.define(version: 20171225201216) do
     t.index ["street"], name: "index_addresses_on_street"
   end
 
+  create_table "listings", force: :cascade do |t|
+    t.bigint "property_id", null: false
+    t.text "description"
+    t.integer "price_cents"
+    t.integer "minimum_down_payment_cents"
+    t.boolean "furnished"
+    t.datetime "published_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_listings_on_property_id"
+  end
+
   create_table "properties", force: :cascade do |t|
     t.bigint "address_id", null: false
     t.string "type", null: false
@@ -67,19 +80,6 @@ ActiveRecord::Schema.define(version: 20171225201216) do
     t.index ["owner_id"], name: "index_properties_on_owner_id"
     t.index ["toilet_count"], name: "index_properties_on_toilet_count"
     t.index ["type"], name: "index_properties_on_type"
-  end
-
-  create_table "sale_listings", force: :cascade do |t|
-    t.bigint "property_id", null: false
-    t.text "description"
-    t.integer "price_cents"
-    t.integer "minimum_down_payment_cents"
-    t.boolean "furnished"
-    t.datetime "published_at"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["property_id"], name: "index_sale_listings_on_property_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20171225201216) do
   end
 
   create_table "visits", force: :cascade do |t|
-    t.bigint "sale_listing_id", null: false
+    t.bigint "listing_id", null: false
     t.bigint "buyer_id", null: false
     t.bigint "visitor_id", null: false
     t.datetime "at", null: false
@@ -135,10 +135,10 @@ ActiveRecord::Schema.define(version: 20171225201216) do
     t.datetime "updated_at", null: false
     t.index ["at"], name: "index_visits_on_at"
     t.index ["buyer_id"], name: "index_visits_on_buyer_id"
-    t.index ["sale_listing_id"], name: "index_visits_on_sale_listing_id"
+    t.index ["listing_id"], name: "index_visits_on_listing_id"
     t.index ["visitor_id"], name: "index_visits_on_visitor_id"
   end
 
   add_foreign_key "properties", "users", column: "owner_id"
-  add_foreign_key "visits", "sale_listings"
+  add_foreign_key "visits", "listings"
 end

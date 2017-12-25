@@ -1,4 +1,4 @@
-class SaleListing < ApplicationRecord
+class Listing < ApplicationRecord
   def self.permitted_params
     [:property_id, :description, :price, :minimum_down_payment, :furnished]
   end
@@ -14,7 +14,7 @@ class SaleListing < ApplicationRecord
             uniqueness: { conditions: -> { published } },
             if: :published?
 
-  has_many :visits, inverse_of: :sale_listing
+  has_many :visits, inverse_of: :listing
   belongs_to :property
   scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
 

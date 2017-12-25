@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Property:</strong>
+  <%= @listing.property %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @listing.type %>
+</p>
+
+<p>
+  <strong>Price cents:</strong>
+  <%= @listing.price_cents %>
+</p>
+
+<p>
+  <strong>Minimum down payment cents:</strong>
+  <%= @listing.minimum_down_payment_cents %>
+</p>
+
+<p>
+  <strong>Furnished:</strong>
+  <%= @listing.furnished %>
+</p>
+
+<%= link_to 'Edit', edit_listing_path(@listing) %> |
+<%= link_to 'Back', listings_path %>
