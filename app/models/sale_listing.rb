@@ -1,4 +1,4 @@
-class SaleListing < PropertyListing
+class SaleListing < ApplicationRecord
   def self.permitted_params
     [:property_id, :description, :price, :minimum_down_payment, :furnished]
   end
@@ -9,8 +9,34 @@ class SaleListing < PropertyListing
   end
 
   validates :price, :description, presence: true, if: :published?
+  validates :property, presence: true
+  validates :property_id,
+            uniqueness: { conditions: -> { published } },
+            if: :published?
+
+  has_many :visits, inverse_of: :sale_listing
+  belongs_to :property
+  scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
+
   money :price, allow_nil: true
   money :minimum_down_payment, allow_nil: true
+
+  def idle?
+    !published_at?
+  end
+
+  def published?
+    published_at? && !deleted?
+  end
+
+  def deleted?
+    deleted_at?
+  end
+
+  def available?(at:)
+    # TODO: Stub.
+    true
+  end
 
   defaction :publish, ability: :idle?,
             errors: { :published? => 'já está publicado',
