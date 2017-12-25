@@ -17,4 +17,13 @@ class Visit < ApplicationRecord
 
   validates :sale_listing, :buyer, :at, presence: true
   validates :at, allow_blank: true, on_or_after: -> { Time.zone.now }
+  validates :availability
+
+  private
+
+  def availability
+    return unless buyer && sale_listing && at
+    return add_error(:buyer, 'indisponível nesse horário') unless buyer.available?(at: at)
+    return add_error(:sale_listing, 'indisponível nesse horário') unless sale_listing.available?(at: at)
+  end
 end

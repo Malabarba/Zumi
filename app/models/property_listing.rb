@@ -5,6 +5,7 @@ class PropertyListing < ApplicationRecord
             uniqueness: { conditions: -> { published } },
             if: :published?
 
+  has_many :visits, inverse_of: :sale_listing
   belongs_to :property
   scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
 
@@ -29,5 +30,14 @@ class PropertyListing < ApplicationRecord
   defaction :remove, ability: :published?,
             errors: { :deleted_at? => 'já está removido' } do
     update(deleted_at: Time.zone.now)
+  end
+
+  def available?(at:)
+    # TODO: Stub.
+    true
+  end
+
+  defaction :schedule_visit, ability: :published?, params: [:buyer_id, :at] do |args|
+    visits.create(**args)
   end
 end

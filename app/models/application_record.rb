@@ -5,6 +5,11 @@ class ApplicationRecord < ActiveRecord::Base
   # `type' is a very useful column name.
   self.inheritance_column = nil
 
+  def add_error(key, msg)
+    errors.add(key, msg)
+    false
+  end
+
   def permitted_params
     self.class.permitted_params
   end
@@ -34,7 +39,9 @@ class ApplicationRecord < ActiveRecord::Base
     public_send("may_#{action}?")
   end
 
-  def self.defaction(action, errors: {}, ability: nil, &block)
+  def self.defaction(action, errors: {}, ability: nil, params: [], &block)
+    @action_params ||= {}
+    @action_params[action] = params
     define_method("may_#{action}?") do
       may = ability ? instance_eval(&ability) : true
       return false unless may
