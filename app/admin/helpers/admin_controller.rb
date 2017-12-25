@@ -41,6 +41,18 @@ module AdminController
       end
 
       instance_exec(&block) if block_given?
+
+      # controller do
+
+      #   # def end_of_association_chain
+      #   #   return super unless %w(show index).include?(request.params[:action])
+      #   #   included = [:portfolio,
+      #   #               payment_plans: :contract,
+      #   #               proposal: { company: { requirer: { person: :user } } },
+      #   #               student_proposal: { requirer: { person: :user } }]
+      #   #   super.includes(included)
+      #   # end
+      # end
     end
   end
 
