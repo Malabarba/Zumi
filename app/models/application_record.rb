@@ -36,7 +36,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def may?(action)
-    instance_exec(self.class.action_may[action])
+    instance_exec(&self.class.action_may[action])
   end
 
   class << self
