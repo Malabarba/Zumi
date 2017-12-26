@@ -22,6 +22,10 @@ class Visit < ApplicationRecord
 
   enumerize :status, in: %i(pending confirmed canceled bailed), default: :pending
 
+  defaction :confirm, ability: :pending? do
+    update(status: :confirmed)
+  end
+
   private
 
   def availability
