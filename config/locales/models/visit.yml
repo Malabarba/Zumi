@@ -14,12 +14,13 @@ pt-BR:
       visit: &visit
         at: 'Horário'
         buyer: 'Comprador'
+        buyer_phone: 'Telefone do Comprador'
         status: 'Status'
         visitor: 'Visitador'
   enumerize:
     visit:
       status:
-        pending: 'Pendente'
+        pending: 'A Confirmar'
         confirmed: 'Confirmada'
         canceled: 'Cancelada'
         bailed: 'Não Apareceu'

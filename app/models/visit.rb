@@ -5,7 +5,7 @@ class Visit < ApplicationRecord
 
   set_index_columns do |user|
     if user&.admin?
-      %i(buyer visitor at status)
+      %i(at status_text buyer_phone buyer visitor)
     else
       %i(at status)
     end
@@ -21,6 +21,7 @@ class Visit < ApplicationRecord
   validate :availability
 
   status_values %i(pending confirmed canceled bailed), default: :pending
+  scope :to_go, -> { confirmed.where('at::date >= ?', Time.zone.today) }
 
   defaction :confirm, 'Confirmar', ability: :pending? do
     update(status: :confirmed)
@@ -38,6 +39,7 @@ class Visit < ApplicationRecord
   end
 
   delegate :past?, :future?, :today?, to: :at
+  delegate :phone, to: :buyer, prefix: true
 
   private
 
