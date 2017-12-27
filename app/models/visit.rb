@@ -22,7 +22,7 @@ class Visit < ApplicationRecord
 
   status_values %i(pending confirmed canceled bailed), default: :pending
 
-  defaction :confirm, ability: :pending? do
+  defaction :confirm, 'Confirmar', ability: :pending? do
     update(status: :confirmed)
   end
 

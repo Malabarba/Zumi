@@ -44,6 +44,8 @@ module AdminController
         end
       end
 
+      @model.actions.values.each { |a| resource_action(a) }
+
       instance_exec(&block) if block_given?
 
       # controller do
@@ -65,14 +67,13 @@ module AdminController
   end
 
   module Helpers
-    def resource_action(action, title:, args: nil, link_data: nil)
-      args ||= @model.action_params[action].presence
+    def resource_action(action:, label:, params: nil, link_data: nil, **_)
+      args = params.presence
       link_method = args ? :get : :patch
       action_item action, only: [:show] do
         if resource.may?(action)
-          link_to title,
-                  public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path),
-                  { method: link_method, data: link_data }
+          path = public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path)
+          link_to label, path, { method: link_method, data: link_data }
         end
       end
 
