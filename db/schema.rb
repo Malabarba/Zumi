@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171225220151) do
+ActiveRecord::Schema.define(version: 20171225233142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,9 +133,11 @@ ActiveRecord::Schema.define(version: 20171225220151) do
     t.datetime "at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", null: false
     t.index ["at"], name: "index_visits_on_at"
     t.index ["buyer_id"], name: "index_visits_on_buyer_id"
     t.index ["listing_id"], name: "index_visits_on_listing_id"
+    t.index ["status"], name: "index_visits_on_status"
     t.index ["visitor_id"], name: "index_visits_on_visitor_id"
   end
 
