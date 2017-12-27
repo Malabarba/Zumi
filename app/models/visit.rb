@@ -26,6 +26,19 @@ class Visit < ApplicationRecord
     update(status: :confirmed)
   end
 
+  defaction :cancel, 'Cancelar',
+            ability: proc { pending? || confirmed? } do
+    update(status: :canceled)
+  end
+
+  defaction :bailed, 'Comprador Deu Bolo',
+            errors: { :future? => 'Horário da visita ainda não passou' },
+            ability: :confirmed? do
+    update(status: :bailed)
+  end
+
+  delegate :past?, :future?, :today?, to: :at
+
   private
 
   def availability
