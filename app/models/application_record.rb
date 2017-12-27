@@ -35,6 +35,12 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
+  def self.status_values(statii, default:)
+    enumerize(:status, in: statii, default: default)
+    delegate(*statii.map { |s| :"#{s}?" }, to: :status)
+    statii.each { |s| scope(s, -> { where(status: s)}) }
+  end
+
   def may?(action)
     instance_exec(&self.class.action_may[action])
   end

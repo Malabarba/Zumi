@@ -20,7 +20,7 @@ class Visit < ApplicationRecord
   validates :listing, :buyer, :at, presence: true
   validate :availability
 
-  enumerize :status, in: %i(pending confirmed canceled bailed), default: :pending
+  status_values %i(pending confirmed canceled bailed), default: :pending
 
   defaction :confirm, ability: :pending? do
     update(status: :confirmed)
