@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227231504) do
+ActiveRecord::Schema.define(version: 20171229221808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,19 @@ ActiveRecord::Schema.define(version: 20171227231504) do
     t.index ["type"], name: "index_properties_on_type"
   end
 
+  create_table "property_photos", force: :cascade do |t|
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.bigint "property_id", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_property_photos_on_deleted_at"
+    t.index ["property_id"], name: "index_property_photos_on_property_id"
+  end
+
   create_table "user_favorite_listings", force: :cascade do |t|
     t.bigint "listing_id"
     t.bigint "user_id"
@@ -151,6 +164,7 @@ ActiveRecord::Schema.define(version: 20171227231504) do
   end
 
   add_foreign_key "properties", "users", column: "owner_id"
+  add_foreign_key "property_photos", "properties"
   add_foreign_key "user_favorite_listings", "listings"
   add_foreign_key "user_favorite_listings", "users"
   add_foreign_key "visits", "listings"

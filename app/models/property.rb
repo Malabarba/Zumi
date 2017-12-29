@@ -20,7 +20,8 @@ class Property < ApplicationRecord
 
   include FilterableEnumerize
 
-  has_many :listings
+  has_many :listings, inverse_of: :property
+  has_many :photos, class_name: 'PropertyPhoto', inverse_of: :property
   belongs_to :address
   belongs_to :owner, class_name: 'User', inverse_of: :properties
 

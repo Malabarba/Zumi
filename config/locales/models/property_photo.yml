@@ -1,0 +1,18 @@
+pt-BR:
+  activerecord:
+    errors:
+      models:
+        property_photo:
+          attributes:
+            property:
+              required: 'não pode ficar em branco'
+    models:
+      property_photo:
+        one: 'Foto de Imóvel'
+        other: 'Fotos de Imóveis'
+    attributes:
+      property_photo: &property_photo
+        property: Imóvel
+        file_file_name: 'Nome do arquivo'
+        file_file_size: 'Tamanho do arquivo (Bytes)'
+        file_content_type: 'Content Type'

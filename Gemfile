@@ -38,6 +38,7 @@ gem 'devise'
 gem 'enumerize'
 gem 'jquery-rails'
 gem 'money-rails'
+gem 'paperclip'
 gem 'paper_trail'
 gem 'role_model'
 
