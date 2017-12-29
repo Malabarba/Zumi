@@ -1,3 +1,1 @@
-AdminController.register(PropertyPhoto) do
-  actions :all
-end  
+AdminController.register(PropertyPhoto, destroy_action: true)

@@ -1,11 +1,11 @@
 module AdminController
-  def self.register(model, &block)
+  def self.register(model, destroy_action: false, &block)
     ActiveAdmin.register(model) do
       extend AdminController::Helpers
 
       model.reflections.each { |r, _| remove_filter(r.to_sym) }
 
-      actions :all, :except => :destroy
+      actions :all, except: (destroy_action ? [] : :destroy)
 
       @model = model
 
