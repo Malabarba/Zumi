@@ -294,34 +294,6 @@ ActiveAdmin.setup do |config|
   # config.order_clause = MyOrderClause
 end
 
-# module ActiveAdmin::ViewHelpers
-#   include ActiveAdmin::ViewsHelper
-# end
-
-# class ActiveAdmin::ResourceDSL
-#   def add_site_link(only: %i(index show))
-#     action_item :go_to_dashboard, only: only do
-#       link_to 'Ver no site', request.fullpath.gsub(%r{\A/admin/}, '/painel/')
-#     end
-#   end
-# end
-
-# # Display false as Não, instead of empty.
-# module JengaActiveAdminDisplayHelpers
-#   def find_attr_value(*args)
-#     val = super(*args)
-#     case val
-#     when true then 'Sim'
-#     when false then 'Não'
-#     else val
-#     end
-#   end
-# end
-
-# class ActiveAdmin::Views::AttributesTable
-#   prepend JengaActiveAdminDisplayHelpers
-# end
-
 # module JengaActiveAdminCSVHelpers
 #   def encode(content, options)
 #     content = case content

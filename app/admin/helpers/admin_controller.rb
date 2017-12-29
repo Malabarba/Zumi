@@ -17,11 +17,13 @@ module AdminController
       end
 
       show do |resource|
+        extend AdminViewsHelper
+
         attributes_table do
           model.reflections.each do |k, ref|
             row(k.to_sym) unless ref.macro == :has_many
           end
-          model.columns_hash.each do |k, adapter|
+          model.columns_hash.each do |k, _adapter|
             next if k =~ /^id$|_(password|token|id)$/
             if  k == 'roles_mask'
               row(:roles) { resource.roles.to_a }
@@ -32,6 +34,13 @@ module AdminController
             end
           end
           tabs do
+            model.columns_hash.each do |k, _adapter|
+              next unless k =~ /_file_name$/
+              k = k.gsub(/_file_name$/, '')
+              tab(model.human_attribute_name(k)) do
+                display_or_link_attachment(resource, k)
+              end
+            end
             model.reflections.each do |k, ref|
               next unless ref.macro == :has_many
               next if k == 'versions'
