@@ -1,4 +1,4 @@
-class ListingsController < ApplicationController
+class Api::V1::ListingsController < Api::ApiController
   # GET /listings
   # GET /listings.json
   def index
@@ -15,6 +15,6 @@ class ListingsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_listing
-    @listing = Listing.find(params[:id])
+    @listing = Listing.published.find(params[:id])
   end
 end
