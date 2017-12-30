@@ -5,6 +5,12 @@ class ApplicationRecord < ActiveRecord::Base
   # `type' is a very useful column name.
   self.inheritance_column = nil
 
+  def self.inherited(model)
+    super
+    hash = { model.model_name.param_key => { updated_at: 'Atualizado em', created_at: 'Criado em' } }
+    I18n.backend.store_translations(:'pt-BR', {activerecord: {attributes: hash } })
+  end
+
   def add_error(key, msg)
     errors.add(key, msg)
     false
