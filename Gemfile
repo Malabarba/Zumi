@@ -40,6 +40,7 @@ gem 'jquery-rails'
 gem 'money-rails'
 gem 'paperclip'
 gem 'paper_trail'
+gem 'paranoia'
 gem 'role_model'
 
 group :development, :test do

@@ -1,4 +1,6 @@
 class PropertyPhoto < ApplicationRecord
+  acts_as_paranoid
+
   def self.permitted_params
     %i(file property_id)
   end
