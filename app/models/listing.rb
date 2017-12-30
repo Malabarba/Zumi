@@ -42,14 +42,16 @@ class Listing < ApplicationRecord
     true
   end
 
-  defaction :publish, 'Publicar', ability: :idle?,
+  IS_OWNER = proc { |user:| user == owner }
+
+  defaction :publish, 'Publicar', ability: :idle?, user_ability: IS_OWNER,
             errors: { :published? => 'já está publicado',
                       :deleted_at? => 'foi publicado e removido' } do
-    update(published_at: Time.zone.now)
+    touch(:published_at)
   end
 
-  defaction :remove, 'Remover', ability: :published?,
+  defaction :remove, 'Remover', ability: :published?, user_ability: IS_OWNER,
             errors: { :deleted_at? => 'já está removido' } do
-    update(deleted_at: Time.zone.now)
+    touch(:deleted_at)
   end
 end

@@ -23,18 +23,19 @@ class Visit < ApplicationRecord
   status_values %i(pending confirmed canceled bailed), default: :pending
   scope :to_go, -> { confirmed.where('at::date >= ?', Time.zone.today) }
 
-  defaction :confirm, 'Confirmar', ability: :pending? do
+  defaction :confirm, 'Confirmar', admin: true,
+            ability: :pending? do
     update(status: :confirmed)
   end
 
-  defaction :cancel, 'Cancelar',
+  defaction :cancel, 'Cancelar', admin: true,
             ability: proc { pending? || confirmed? } do
     update(status: :canceled)
   end
 
   defaction :bailed, 'Comprador Deu Bolo',
             errors: { :future? => 'Horário da visita ainda não passou' },
-            ability: :confirmed? do
+            ability: :confirmed?, admin: true do
     update(status: :bailed)
   end
 

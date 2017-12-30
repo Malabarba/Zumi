@@ -82,7 +82,7 @@ module AdminController
       args = params.presence
       link_method = args ? :get : :patch
       action_item action, only: [:show] do
-        if resource.may?(action)
+        if resource.may?(action, user: current_user)
           path = public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path)
           link_to label, path, { method: link_method, data: link_data }
         end
@@ -90,11 +90,9 @@ module AdminController
 
       member_action action, method: [:patch, link_method].uniq do
         if request.patch?
-          msg = ["#{action}!"]
-          if args
-            key = resource.param_key
-            msg << params.require(key).permit(*args).to_h.symbolize_keys
-          end
+          permitted = params.require(resource.param_key).permit(*(args || []))
+          msg = ["#{action}!",
+                 { args: permitted.to_h.symbolize_keys, user: current_user }]
           if resource.public_send(*msg)
             redirect_to_resource
           else
@@ -111,12 +109,12 @@ module AdminController
       end
     end
 
-    def update_form(params)
-      permit_params(*params)
+    def update_form(spec)
+      permit_params(*spec)
 
       form do |f|
         f.semantic_errors(*f.object.errors.keys)
-        f.inputs { AdminForm.make_inputs(f, params) }
+        f.inputs { AdminForm.make_inputs(f, spec, params) }
         f.actions
       end
     end
