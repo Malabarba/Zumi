@@ -5,7 +5,7 @@ class PropertyPhoto < ApplicationRecord
     %i(file property_id)
   end
 
-  set_index_columns do |user|
+  admin_index_columns do
     %i(property file_file_name file_content_type url)
   end
 

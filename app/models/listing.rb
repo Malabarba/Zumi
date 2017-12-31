@@ -3,9 +3,8 @@ class Listing < ApplicationRecord
     [:property_id, :description, :price, :minimum_down_payment, :furnished]
   end
 
-  set_index_columns do |user|
-    %i(property price furnished published_at) +
-      (user&.admin? ? [:deleted_at] : [])
+  admin_index_columns do
+    %i(property price furnished published_at deleted_at)
   end
 
   validates :price, :description, presence: true, if: :published?

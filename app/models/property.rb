@@ -14,7 +14,7 @@ class Property < ApplicationRecord
      address_attributes: [:id, *Address.permitted_params]]
   end
 
-  set_index_columns do
+  admin_index_columns do
     %i(address type toilet_count bath_count bedroom_count floor)
   end
 

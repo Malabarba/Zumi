@@ -24,7 +24,7 @@ class ApplicationRecord < ActiveRecord::Base
     self.class.model_name.param_key
   end
 
-  def self.set_index_columns(&block)
+  def self.admin_index_columns(&block)
     @index_columns_block = block
   end
 

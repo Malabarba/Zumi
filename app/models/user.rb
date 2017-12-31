@@ -3,12 +3,8 @@ class User < ApplicationRecord
     %i(email password password_confirmation first_name surname phone birth_date)
   end
 
-  set_index_columns do |user|
-    if user&.admin?
-      %i(email first_name surname current_sign_in_at sign_in_count created_at)
-    else
-      []
-    end
+  admin_index_columns do
+    %i(email first_name surname current_sign_in_at sign_in_count created_at)
   end
 
   include RoleModel

@@ -3,12 +3,8 @@ class Visit < ApplicationRecord
     %i(listing_id buyer_id visitor_id at)
   end
 
-  set_index_columns do |user|
-    if user&.admin?
-      %i(at status_text buyer_phone buyer visitor)
-    else
-      %i(at status)
-    end
+  admin_index_columns do
+    %i(at status_text buyer_phone buyer visitor)
   end
 
   include FilterableEnumerize
