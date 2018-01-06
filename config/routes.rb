@@ -6,9 +6,12 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get 'me', to: 'me#show'
+
       get 'listings', to: 'listings#index'
-      post 'listings', to: 'listings#create'
       get 'listings/:id', to: 'listings#show'
+
+      get 'properties', to: 'properties#index'
+      get 'properties/:id', to: 'properties#show'
     end
   end
 end
