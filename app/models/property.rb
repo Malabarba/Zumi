@@ -18,7 +18,7 @@ class Property < ApplicationRecord
     %i(address type toilet_count bath_count bedroom_count floor)
   end
 
-  serialize_with(:address, :type,
+  serialize_with(:id, :address, :type,
                  :toilet_count, :bath_count, :bedroom_count,
                  :floor)
 

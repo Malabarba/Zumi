@@ -9,7 +9,7 @@ class PropertyPhoto < ApplicationRecord
     %i(property file_file_name file_content_type url)
   end
 
-  serialize_with(:url)
+  serialize_with(:id, :url)
 
   belongs_to :property
 
