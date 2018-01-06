@@ -7,7 +7,7 @@ class Listing < ApplicationRecord
     %i(property price furnished published_at deleted_at)
   end
 
-  serialize_with(:id, :property, :price, :furnished,
+  serialize_with(:id, :property, :price_cents, :furnished,
                  :published_at, :deleted_at)
 
   validates :price, :description, presence: true, if: :published?
