@@ -7,6 +7,8 @@ class Visit < ApplicationRecord
     %i(at status_text buyer_phone buyer visitor)
   end
 
+  serialize_with(:at, :status)
+
   include FilterableEnumerize
 
   belongs_to :listing, inverse_of: :visits

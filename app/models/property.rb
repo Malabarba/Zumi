@@ -18,6 +18,10 @@ class Property < ApplicationRecord
     %i(address type toilet_count bath_count bedroom_count floor)
   end
 
+  serialize_with(:address, :type,
+                 :toilet_count, :bath_count, :bedroom_count,
+                 :floor)
+
   include FilterableEnumerize
 
   has_many :listings, inverse_of: :property

@@ -4,6 +4,7 @@ class Address < ApplicationRecord
   end
 
   validates(*permitted_params, presence: true)
+  serialize_with(*permitted_params)
 
   def to_s
     permitted_params.map { |p| public_send(p).presence }

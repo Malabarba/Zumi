@@ -9,6 +9,8 @@ class PropertyPhoto < ApplicationRecord
     %i(property file_file_name file_content_type url)
   end
 
+  serialize_with(:url)
+
   belongs_to :property
 
   has_attached_file :file, { preserve_files: true }
