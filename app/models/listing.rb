@@ -17,6 +17,9 @@ class Listing < ApplicationRecord
             if: :published?
 
   has_many :visits, inverse_of: :listing
+  has_many :user_favorite_listings, inverse_of: :listing
+  has_many :favorited_by, through: :user_favorite_listings, source: :user
+
   belongs_to :property
   scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
 
