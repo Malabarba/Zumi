@@ -1,6 +1,11 @@
 class Api::V1::ListingsController < Api::V1::ApiController
   def index
-    render json: { listings: scope.as_json(shallow: true) }
+    render json: { listings: scope.limit(100).as_json(shallow: true) }
+  end
+
+  def neighborhoods
+    @neighborhoods = Address.order(:neighborhood).group(:neighborhood).count
+    render json: { neighborhoods: @neighborhoods }
   end
 
   def show

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'me', to: 'me#show'
 
       get 'listings', to: 'listings#index'
+      get 'listings_neighborhoods', to: 'listings#neighborhoods'
       get 'listings/:id', to: 'listings#show'
 
       get 'properties', to: 'properties#index'
