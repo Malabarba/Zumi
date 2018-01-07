@@ -35,7 +35,7 @@ module Serializable
     end
 
     def index_columns(*args)
-      @index_columns_block.call(*args)
+      @index_columns_block&.call(*args)
     end
 
     private

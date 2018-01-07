@@ -42,11 +42,12 @@ module AdminController
               end
             end
             model.reflections.each do |k, ref|
-              next unless ref.macro == :has_many
               next if k == 'versions'
+              next unless ref.macro == :has_many &&
+                          ref.klass.try(:index_columns, current_user)
               tab(model.human_attribute_name(k)) do
                 table_for(resource.public_send(k)) do
-                  column(ref.klass.model_name.human) { |a| link_to(a, [:admin, a]) }
+                  column(ref.klass.model_name.human) { |a| a }
                   ref.klass.index_columns(current_user).each { |c| column(c) }
                 end
               end
