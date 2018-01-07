@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   ActiveAdmin.routes(self)
-  root to: 'listings#index'
+
+  # root to: 'listings#index'
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get 'me', to: 'me#show'
