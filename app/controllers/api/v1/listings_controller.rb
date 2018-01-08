@@ -1,6 +1,6 @@
 class Api::V1::ListingsController < Api::V1::ApiController
   def index
-    render json: { listings: scope.limit(100).as_json(shallow: true) }
+    render json: { listings: scope.order(created_at: :desc).limit(30).as_json(shallow: true) }
   end
 
   def neighborhoods
