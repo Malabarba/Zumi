@@ -1,0 +1,72 @@
+.ios-9-menu {
+  display: none !important;
+}
+
+body.ios-9 {
+  // Overwrite
+  // Mobile menu on Safari/ IOS 9 /////////////////////////
+  .ui.menu a.item {
+    padding-bottom: 5px !important;
+
+    span {
+      display: block;
+      height: 100% !important;
+    }
+  }
+
+  .mobile-menu .ui.menu a {
+    display: block;
+    height: 100% !important;
+    user-select: auto !important;
+    touch-action: manipulation;
+  }
+
+  social-icons.fullwidth {
+    padding-top: 8px !important;
+    font-size: 1em;
+  }
+
+  // On mobile safari <= 9 invert menu display
+  .ios-menu {
+    display: none !important;
+  }
+
+  .ios-9-menu {
+    display: block !important;
+  }
+  ///////////////////////////
+
+  // Home on Safari/ IOS 9 /////////////////////////
+  .card-mobile-content {
+    padding-left: 20px !important;
+  }
+
+  .ui.menu.five.item .item.static h3 {
+    padding: 1.5em 1em !important;
+  }
+
+  .ui.grid .column img {
+    height: 80% !important;
+  }
+
+  form input {
+    width: 210px !important;
+  }
+  ///////////////////////////
+
+  // Emprestimo on Safari/ IOS 9 /////////////////////////
+  .tv-image {
+    display: block !important;
+  }
+  ///////////////////////////
+
+  // Emprestimo/ Investimento on Safari/ IOS 9 /////////////////////////
+  investimento-tv .tv-image {
+    background-position: 80% 0 !important;
+  }
+
+  emprestimo-tv .tv-content {
+    display: block !important;
+  }
+  ///////////////////////////
+}

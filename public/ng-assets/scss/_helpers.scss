@@ -1,0 +1,106 @@
+@import '~ng-assets/scss/_variables.scss';
+
+// FLEX ALIGNER Generic Selector.
+// Reference: https://philipwalton.github.io/solved-by-flexbox/demos/vertical-centering/
+
+.flex-aligner {
+  display: flex !important;
+  align-items: center !important;
+
+  &.on-both-sides { //make content to be aligned to both sides of the box, like carousel arrows buttons
+    justify-content: space-between !important;
+  }
+
+  &.centralized { //make content to be centralized
+    justify-content: space-around !important;
+  }
+
+  .flex-aligner-item {
+    max-width: 50%;
+  }
+
+  .flex-aligner-item-top {
+    align-self: flex-start;
+  }
+
+  .flex-aligner-item--bottom {
+    align-self: flex-end;
+  }
+}
+
+
+/////////////////////////////////
+// Animated underline links
+.animated-links {
+  a {
+    position: relative;
+    color: $white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $white;
+  }
+
+  a::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: $white;
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: .2s ease-in-out;
+  }
+
+  a:hover::before {
+    visibility: visible;
+    transform: scaleX(1);
+  }
+}
+
+/////////////////////////////////
+// Content Triangles
+.content-triangle-white {
+  background: transparent url('~ng-assets/images/components/content-triangle/white.v1.png') no-repeat center -4px;
+}
+
+.content-triangle-gray {
+  background: transparent url('~ng-assets/images/components/content-triangle/gray.v1.png') no-repeat center -4px;
+}
+
+/////////////////////////////////
+// Text helpers
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+/////////////////////////////////
+// Text helpers
+
+@media only screen and (min-width: $computerBreakpoint) {
+  .only-mobile {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: $computerBreakpoint) {
+  .only-desktop {
+    display: none !important;
+  }
+}

@@ -1,0 +1,16 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+/*
+   Reseting rounded corners for inputs and action buttons.
+   See example on footer's newsletter form.
+*/
+.ui.input input {
+  border-radius: 0
+}
+.ui.action.input:not([class*="left action"]) > .dropdown:last-child,
+.ui.action.input:not([class*="left action"]) > .button:last-child,
+.ui.action.input:not([class*="left action"]) > .buttons:last-child > .button {
+  border-radius: 0 0 0 0;
+}
