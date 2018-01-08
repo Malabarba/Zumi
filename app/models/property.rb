@@ -15,11 +15,13 @@ class Property < ApplicationRecord
   end
 
   admin_index_columns do
-    %i(address type toilet_count bath_count bedroom_count floor)
+    %i(address type_text toilet_count bath_count bedroom_count floor)
   end
 
-  serialize_with(:id, :address, :type,
+  serialize_with(:id, :address, :type, :type_text,
                  :toilet_count, :bath_count, :bedroom_count,
+                 :lot_size_m2, :usable_size_m2,
+                 :condo_cost_cents,
                  :floor)
 
   include FilterableEnumerize
