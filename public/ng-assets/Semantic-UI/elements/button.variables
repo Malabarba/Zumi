@@ -1,8 +1,0 @@
-/*******************************
-    User Variable Overrides
-*******************************/
-
-//button text weight. Originally 700.
-@fontWeight: 300;
-@textTransform: uppercase;
-@verticalTopPadding: 1em;
