@@ -30,6 +30,11 @@ module Seed
       (a..b).to_a.sample
     end
   end
+
+  PHOTOS = Dir["#{Rails.root}/fixtures/photos/*"].map { |f| File.new(f) }.freeze
+  def self.photo
+    PHOTOS.sample
+  end
 end
 
 if Rails.env.development? || Rails.env.staging?
@@ -37,7 +42,7 @@ if Rails.env.development? || Rails.env.staging?
   admin.update!(password: 'password', roles: [:admin], name: 'Administrador Responsável')
   buyer = User.find_by(email: 'buyer@example.com') || User.new(email: 'buyer@example.com')
   buyer.update!(password: 'password', roles: [:seller], name: 'Comprador Interessado')
-  300.times do
+  10.times do
     name = Faker::Simpsons.character
     seller = User.create!(password: 'password', roles: [:buyer], name: name,
                           email: "#{name.downcase.gsub(/\W+/, '.')}+#{(rand * 1000000).to_i}@example.com")
@@ -54,6 +59,7 @@ if Rails.env.development? || Rails.env.staging?
                     age_in_years: Seed[1, 40],
                     floor: Seed[1, 20],
                     building_height: 20)
+            .tap { |p| Seed[3, 10].times { p.photos.create(file: Seed.photo) } }
             .listings
             .create(description: Faker::Lorem.paragraph(3),
                     price_cents: Seed[4, 15] * 100_000_00,
