@@ -18,4 +18,6 @@ class PropertyPhoto < ApplicationRecord
                        presence: true,
                        content_type: { content_type: /\Aimage/},
                        size: { less_than: 30.megabytes }
+
+  delegate :url, to: :file
 end

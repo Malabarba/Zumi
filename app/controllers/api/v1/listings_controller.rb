@@ -19,7 +19,7 @@ class Api::V1::ListingsController < Api::V1::ApiController
   private
 
   def scope
-    Listing.includes(property: :address).published
+    Listing.includes(property: [:address, :photos]).published
   end
 
   # Use callbacks to share common setup or constraints between actions.
