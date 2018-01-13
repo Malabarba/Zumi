@@ -4,7 +4,10 @@ module AdminForm
       case p
       when Symbol
         v = { input_html: { value: query_params[p] } } if query_params.include?(p)
-        f.input(p.to_s.gsub(/_id$/, ''), v)
+        f.input(p.to_s.gsub(/_id$/, ''), v || {})
+        if p == :file && (file = f.object.public_send(p))
+          f.img(src: file.url, style: 'max-width: 500px') if file.content_type =~ /image/
+        end
       when Hash
         p.each do |k, subspec|
           col = k.to_s.gsub(/_attributes$/, '').to_sym
