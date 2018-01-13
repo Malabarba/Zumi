@@ -42,7 +42,7 @@ if Rails.env.development? || Rails.env.staging?
   admin.update!(password: 'password', roles: [:admin], name: 'Administrador Responsável')
   buyer = User.find_by(email: 'buyer@example.com') || User.new(email: 'buyer@example.com')
   buyer.update!(password: 'password', roles: [:seller], name: 'Comprador Interessado')
-  10.times do
+  100.times do
     name = Faker::Simpsons.character
     seller = User.create!(password: 'password', roles: [:buyer], name: name,
                           email: "#{name.downcase.gsub(/\W+/, '.')}+#{(rand * 1000000).to_i}@example.com")
