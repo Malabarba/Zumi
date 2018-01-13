@@ -37,7 +37,7 @@ module Seed
   end
 end
 
-if Rails.env.development? || Rails.env.staging?
+if 1#Rails.env.development? || Rails.env.staging?
   admin = User.find_by(email: 'admin@example.com') || User.new(email: 'admin@example.com')
   admin.update!(password: 'password', roles: [:admin], name: 'Administrador Responsável')
   buyer = User.find_by(email: 'buyer@example.com') || User.new(email: 'buyer@example.com')
