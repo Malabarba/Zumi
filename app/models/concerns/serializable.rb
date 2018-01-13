@@ -27,7 +27,7 @@ module Serializable
 
     def serialization
       return @serialization if @serialization
-      @serialization = (@serialize_with || []).map(&method(:make_spec)).to_h
+      @serialization = (@serialize_with || []).map { |k, v| make_spec(k, v) }.to_h
     end
 
     def admin_index_columns(&block)
