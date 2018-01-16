@@ -3,17 +3,22 @@ module Serializable
 
   def as_json(opts = {})
     out = {}
-    self.class.serialization.each do |m, type:, macro: |
-      if type == :association
-        if association_cached?(m) || !opts[:shallow]
-          if macro == :has_many
-            out[m] = send(m)&.as_json(opts.merge(shallow: true))
+    self.class.serialization.each do |method, **spec|
+      if spec[:type] == :association
+        if association_cached?(method) || !opts[:shallow]
+          if spec[:macro] == :has_many
+            out[method] = send(method)&.as_json(opts.merge(shallow: true))
           else
-            out[m] = send(m)&.as_json(opts)
+            out[method] = send(method)&.as_json(opts)
           end
         end
+      elsif spec[:type] == :file
+        file = send(method)
+        out[method] = spec[:styles].reduce(url: file.url) do |h, s|
+          h.merge(s => file.url(s))
+        end
       else
-        out[m] = send(m)&.as_json(opts)
+        out[method] = send(method)&.as_json(opts)
       end
     end
     out
@@ -43,10 +48,13 @@ module Serializable
     def make_spec(method, opts)
       opts ||= {}
       opts = { type: opts } if opts.is_a?(Symbol)
-      opts[:macro] ||= reflections[method.to_s]&.macro
-      opts[:type] ||= if reflections[method.to_s]
-                        :association
-                      end
+      if (ref = reflections[method.to_s])
+        opts[:macro] ||= ref.macro
+        opts[:type] ||= :association
+      elsif (att = (try(:attachment_definitions) || {})[method])
+        opts[:type] ||= :file
+        opts[:styles] ||= att[:styles].map(&:first)
+      end
       [method, opts]
     end
   end
