@@ -9,18 +9,22 @@ class PropertyPhoto < ApplicationRecord
     %i(property file_file_name file_content_type url)
   end
 
-  serialize_with(:id, :url)
+  serialize_with(:id, :file)
 
   belongs_to :property
 
-  has_attached_file :file, { preserve_files: true }
+  has_attached_file :file,
+                    preserve_files: true,
+                    styles: { thumb: '65x50#',
+                              small: '260x200>',
+                              medium: '500x400>',
+                              big: '2400x1600>' }
   validates_attachment :file,
                        presence: true,
                        content_type: { content_type: /\Aimage/},
                        size: { less_than: 30.megabytes }
 
   before_save :randomize_name, if: :file_file_name_changed?
-  delegate :url, to: :file
 
   private
 
