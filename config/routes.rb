@@ -9,16 +9,14 @@ Rails.application.routes.draw do
       get 'me', to: 'me#show'
 
       get 'listings', to: 'listings#index'
-      get 'listings_neighborhoods', to: 'listings#neighborhoods'
-      get 'listings/:id', to: 'listings#show'
+      get 'listings/neighborhoods', to: 'listings#neighborhoods'
+      get 'listing/:id', to: 'listings#show'
 
       get 'properties', to: 'properties#index'
-      get 'properties/:id', to: 'properties#show'
+      get 'property/:id', to: 'properties#show'
     end
   end
 
-  %w(imoveis).each do |r|
-    get r, to: 'static#html_file'
-  end
+  get '*', to: 'static#html_file'
 end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
