@@ -17,8 +17,7 @@ class PropertyPhoto < ApplicationRecord
                     preserve_files: true,
                     styles: { thumb: '65x50#',
                               small: '260x200>',
-                              medium: '500x400>',
-                              big: '2400x1600>' }
+                              medium: '500x400>' }
   validates_attachment :file,
                        presence: true,
                        content_type: { content_type: /\Aimage/},
