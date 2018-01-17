@@ -18,7 +18,7 @@ class Property < ApplicationRecord
     %i(address type_text toilet_count bath_count bedroom_count floor)
   end
 
-  serialize_with(:id, :address, :photos, :type, :type_text,
+  serialize_with(:id, :uniq_hash, :address, :photos, :type, :type_text,
                  :toilet_count, :bath_count, :bedroom_count,
                  :lot_size_m2, :usable_size_m2,
                  :condo_cost_cents,
@@ -32,8 +32,10 @@ class Property < ApplicationRecord
   belongs_to :address
   belongs_to :owner, class_name: 'User', inverse_of: :properties
 
+  before_create :assign_uniq_hash
   validates :address, :type, :toilet_count, :bath_count, :bedroom_count, :floor,
             presence: true
+
   money :condo_cost, allow_nil: true
   enumerize :type, in: %i(studio apartment house lot)
 

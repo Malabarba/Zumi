@@ -24,6 +24,6 @@ class Api::V1::ListingsController < Api::V1::ApiController
 
   # Use callbacks to share common setup or constraints between actions.
   def find_listing
-    @listing ||= scope.find(params[:id])
+    @listing ||= scope.find_by(uniq_hash: params[:id])
   end
 end

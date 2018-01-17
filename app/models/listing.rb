@@ -7,8 +7,10 @@ class Listing < ApplicationRecord
     %i(property price furnished published_at deleted_at)
   end
 
-  serialize_with(:id, :property, :price_cents, :furnished,
+  serialize_with(:id, :uniq_hash, :property, :price_cents, :furnished,
                  :published_at, :deleted_at)
+
+  before_create :assign_uniq_hash
 
   validates :price, :description, presence: true, if: :published?
   validates :property, presence: true

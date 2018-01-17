@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class ApplicationRecord < ActiveRecord::Base
   has_paper_trail
 
@@ -43,6 +45,14 @@ class ApplicationRecord < ActiveRecord::Base
       enumerize(:status, in: statii, default: default)
       delegate(*statii.map { |s| :"#{s}?" }, to: :status)
       statii.each { |s| scope(s, -> { where(status: s)}) }
+    end
+  end
+
+  private
+
+  def assign_uniq_hash
+    while uniq_hash.blank? || self.class.find_by(uniq_hash: uniq_hash).present?
+      self.uniq_hash = SecureRandom.urlsafe_base64
     end
   end
 end

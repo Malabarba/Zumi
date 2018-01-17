@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229221808) do
+ActiveRecord::Schema.define(version: 20180117202104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,7 +56,9 @@ ActiveRecord::Schema.define(version: 20171229221808) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uniq_hash", null: false
     t.index ["property_id"], name: "index_listings_on_property_id"
+    t.index ["uniq_hash"], name: "index_listings_on_uniq_hash", unique: true
   end
 
   create_table "properties", force: :cascade do |t|
@@ -74,12 +76,14 @@ ActiveRecord::Schema.define(version: 20171229221808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "owner_id", null: false
+    t.string "uniq_hash", null: false
     t.index ["address_id"], name: "index_properties_on_address_id"
     t.index ["bath_count"], name: "index_properties_on_bath_count"
     t.index ["bedroom_count"], name: "index_properties_on_bedroom_count"
     t.index ["owner_id"], name: "index_properties_on_owner_id"
     t.index ["toilet_count"], name: "index_properties_on_toilet_count"
     t.index ["type"], name: "index_properties_on_type"
+    t.index ["uniq_hash"], name: "index_properties_on_uniq_hash", unique: true
   end
 
   create_table "property_photos", force: :cascade do |t|
