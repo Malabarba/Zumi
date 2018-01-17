@@ -25,65 +25,24 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   include Serializable
-
-  def self.money(col, **opts)
-    cents_col = :"#{col}_cents"
-    monetize(cents_col, **opts)
-    if col != cents_col && (name = human_attribute_name(col))
-      hash = {activerecord: {attributes: {model_name.param_key => {cents_col => "#{name} (em centavos)"}}}}
-      I18n.backend.store_translations(:'pt-BR', hash)
-    end
-  end
-
-  def self.status_values(statii, default:)
-    enumerize(:status, in: statii, default: default)
-    delegate(*statii.map { |s| :"#{s}?" }, to: :status)
-    statii.each { |s| scope(s, -> { where(status: s)}) }
-  end
-
-  def may?(action, **context)
-    instance_exec(context, &self.class.actions[action][:ability])
-  end
+  include Actionable
 
   class << self
-    def actions
-      @actions || {}
-    end
+    private
 
-    def defaction(action, label,
-                  errors: {}, ability: nil, user_ability: nil,
-                  params: [], admin: false, &block)
-      may = proc do |context = {}|
-        next false unless able?(ability, context)
-        unless context[:user]&.admin?
-          next false if admin || !able?(user_ability, context)
-        end
-
-        errors.each do |cond, error|
-          next unless able?(cond, context)
-          self.errors.add(:base, error)
-          break
-        end
-        self.errors.blank?
-      end
-
-      @actions ||= {}
-      @actions[action] = { params: params, ability: may, action: action, label: label }.freeze
-
-      define_method("#{action}!") do |args:, **opts|
-        next false unless may?(action, opts)
-        instance_exec(*args, &block)
+    def money(col, **opts)
+      cents_col = :"#{col}_cents"
+      monetize(cents_col, **opts)
+      if col != cents_col && (name = human_attribute_name(col))
+        hash = {activerecord: {attributes: {model_name.param_key => {cents_col => "#{name} (em centavos)"}}}}
+        I18n.backend.store_translations(:'pt-BR', hash)
       end
     end
-  end
 
-  private
-
-  def able?(ability, *args)
-    case ability
-    when nil then true
-    when Symbol then instance_eval(&ability)
-    else instance_exec(*args, &ability)
+    def status_values(statii, default:)
+      enumerize(:status, in: statii, default: default)
+      delegate(*statii.map { |s| :"#{s}?" }, to: :status)
+      statii.each { |s| scope(s, -> { where(status: s)}) }
     end
   end
 end
