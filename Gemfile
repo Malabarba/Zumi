@@ -41,6 +41,7 @@ gem 'money-rails'
 gem 'paperclip'
 gem 'paper_trail'
 gem 'paranoia'
+gem 'ransack'
 gem 'role_model'
 
 gem 'faker'

@@ -315,6 +315,7 @@ DEPENDENCIES
   pry-doc
   puma (~> 3.7)
   rails (~> 5.1.4)
+  ransack
   role_model
   rspec-rails
   sass-rails (~> 5.0)
