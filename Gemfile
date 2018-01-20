@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'activeadmin'
+gem 'aws-sdk'
 gem 'devise'
 gem 'enumerize'
 gem 'jquery-rails'

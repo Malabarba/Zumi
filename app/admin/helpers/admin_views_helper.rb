@@ -22,12 +22,14 @@ module AdminViewsHelper
     end
   end
 
+  ONE_WEEK = 60 * 60 * 24 * 7
+
   def display_or_link_attachment(object, attribute, *label_attributes)
     return if object.public_send(attribute).blank?
 
     content_type = object.public_send("#{attribute}_content_type")
     file_name = object.public_send("#{attribute}_file_name")
-    url = object.public_send(attribute).url
+    url = object.public_send(attribute).expiring_url(ONE_WEEK)
 
     if content_type&.match(%r{^image/})
       div(class: 'document-file') do

@@ -14,7 +14,11 @@ class PropertyPhoto < ApplicationRecord
   belongs_to :property
 
   has_attached_file :file,
-                    preserve_files: true,
+                    storage: :s3,
+                    s3_region: 'sa-east-1',
+                    s3_credentials: { bucket: 'zumi-staging-paperclip',
+                                      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+                                      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] },
                     styles: { thumb: '65x50#',
                               small: '260x200>',
                               medium: '500x400>' }
