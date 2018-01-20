@@ -3,12 +3,13 @@ class Api::V1::ListingsController < Api::V1::ApiController
 
   def index
     page = params[:page].to_i
-    search = scope.ransack(**query_params, m: 'a')
+    search = scope.ransack(**search_opts, m: 'a')
     search.sorts = 'published_at desc' if search.sorts.empty?
     search = search.result
                    .limit(PER_PAGE)
                    .offset(page * PER_PAGE)
-    render json: { listings: search.as_json(shallow: true) }
+    render json: { count: search.count,
+                   listings: search.as_json(shallow: true) }
   end
 
   def neighborhoods
@@ -37,11 +38,12 @@ class Api::V1::ListingsController < Api::V1::ApiController
 
   PROPERTY_FILTERS = %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2)
                        .flat_map { |f| [:"property_#{f}_gteq", :"property_#{f}_lteq"] }.freeze
-  def query_params
-    params[:q]&.permit(:s, *PROPERTY_FILTERS,
-                       :furnished_true, :furnished_false,
-                       :price_cents_gteq, :price_cents_lteq,
-                       property_address_neighborhood_in: []) ||
-    {}
+  def search_opts
+    return {} unless (q = params[:q])
+    q.permit(:s, *PROPERTY_FILTERS,
+             :furnished_true, :furnished_false,
+             :price_cents_gteq, :price_cents_lteq,
+             property_address_neighborhood_in: [])
+     .to_h.symbolize_keys
   end
 end
