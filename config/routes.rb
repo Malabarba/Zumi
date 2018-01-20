@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get '*', to: 'static#html_file'
+  get '*a', to: 'static#index_file'
+  get '*a/*b', to: 'static#index_file'
+  get '*a/*b/*c', to: 'static#index_file'
 end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
