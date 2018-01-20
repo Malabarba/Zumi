@@ -36,14 +36,13 @@ class Api::V1::ListingsController < Api::V1::ApiController
     @listing ||= scope.find_by(uniq_hash: params[:id])
   end
 
-  PROPERTY_FILTERS = %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2)
-                       .flat_map { |f| [:"property_#{f}_gteq", :"property_#{f}_lteq"] }.freeze
+  PROPERTY_FILTERS = (
+    %i(furnished_true furnished_false property_address_neighborhood_in) +
+    %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2 price_cents)
+      .flat_map { |f| [:"#{f}_gteq", :"#{f}_lteq"] }
+  ).freeze
   def search_opts
     return {} unless (q = params[:q])
-    q.permit(:s, *PROPERTY_FILTERS,
-             :furnished_true, :furnished_false,
-             :price_cents_gteq, :price_cents_lteq,
-             property_address_neighborhood_in: [])
-     .to_h.symbolize_keys
+    q.permit(:s, *PROPERTY_FILTERS).to_h.symbolize_keys
   end
 end

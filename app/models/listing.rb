@@ -25,6 +25,11 @@ class Listing < ApplicationRecord
   belongs_to :property
   scope :published, -> { where(deleted_at: nil).where.not(published_at: nil) }
 
+  %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2).each do |f|
+    ransack_alias f, :"property_#{f}"
+  end
+  ransack_alias :neighborhood, :property_address_neighborhood
+
   money :price, allow_nil: true
   money :minimum_down_payment, allow_nil: true
 
