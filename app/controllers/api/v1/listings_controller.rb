@@ -41,6 +41,7 @@ class Api::V1::ListingsController < Api::V1::ApiController
     params[:q]&.permit(:s, *PROPERTY_FILTERS,
                        :furnished_true, :furnished_false,
                        :price_cents_gteq, :price_cents_lteq,
-                       property_address_neighborhood_in: [])
+                       property_address_neighborhood_in: []) ||
+    {}
   end
 end
