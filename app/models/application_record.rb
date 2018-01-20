@@ -32,6 +32,20 @@ class ApplicationRecord < ActiveRecord::Base
   class << self
     private
 
+    def attachment(name, public:, **opts)
+      bucket = "zumi-#{Rails.env}-paperclip#{public ? '' : '-private'}"
+      s3_opts = if Rails.env.development? || Rails.env.test?
+                  {}
+                else
+                  { storage: :s3,
+                    s3_region: 'sa-east-1',
+                    s3_credentials: { bucket: bucket,
+                                      access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+                                      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] } }
+                end
+      has_attached_file name, **s3_opts.merge(opts)
+    end
+
     def money(col, **opts)
       cents_col = :"#{col}_cents"
       monetize(cents_col, **opts)
