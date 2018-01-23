@@ -37,7 +37,7 @@ class Api::V1::ListingsController < Api::V1::ApiController
   end
 
   PROPERTY_FILTERS = (
-    %i(furnished_true furnished_false property_address_neighborhood_in) +
+    %i(furnished_true furnished_false neighborhood_in neighborhood_eq) +
     %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2 price_cents)
       .flat_map { |f| [:"#{f}_gteq", :"#{f}_lteq"] }
   ).freeze
