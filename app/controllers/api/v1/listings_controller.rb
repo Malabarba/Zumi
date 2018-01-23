@@ -13,8 +13,8 @@ class Api::V1::ListingsController < Api::V1::ApiController
   end
 
   def neighborhoods
-    @neighborhoods = Address.order(:neighborhood).group(:neighborhood).count
-    render json: { neighborhoods: @neighborhoods }
+    @neighborhoods = scope.order('addresses.neighborhood').group('addresses.neighborhood').count
+    render json: { neighborhoods: @neighborhoods.map { |n, c| { name: n, count: c } } }
   end
 
   def show
