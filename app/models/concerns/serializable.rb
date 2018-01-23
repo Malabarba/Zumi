@@ -1,6 +1,8 @@
 module Serializable
   extend ActiveSupport::Concern
 
+  ONE_WEEK = 7 * 24 * 60 * 60
+
   def as_json(opts = {})
     out = {}
     self.class.serialization.each do |method, **spec|
@@ -14,8 +16,8 @@ module Serializable
         end
       elsif spec[:type] == :file
         file = send(method)
-        out[method] = spec[:styles].reduce(url: file.url) do |h, s|
-          h.merge(s => file.url(s))
+        out[method] = spec[:styles].reduce(url: file.expiring_url(ONE_WEEK)) do |h, s|
+          h.merge(s => file.expiring_url(ONE_WEEK, s))
         end
       else
         out[method] = send(method)&.as_json(opts)
