@@ -2,14 +2,14 @@ class PropertyPhoto < ApplicationRecord
   acts_as_paranoid
 
   def self.permitted_params
-    %i(file property_id)
+    %i(file property_id description)
   end
 
   admin_index_columns do
-    %i(property file_file_name file_content_type url)
+    %i(property file_file_name file_content_type description)
   end
 
-  serialize_with(:id, :file)
+  serialize_with(:id, :file, :description)
 
   belongs_to :property
 
@@ -22,6 +22,17 @@ class PropertyPhoto < ApplicationRecord
                        size: { less_than: 30.megabytes }
 
   before_save :randomize_name, if: :file_file_name_changed?
+
+  UNCAPITALIZED = %w(a o uma um na no em da do de)
+  def description=(s)
+    if s.is_a?(String)
+      super(s.downcase.strip.split
+             .map { |w| UNCAPITALIZED.include?(w) ? w : w.capitalize }
+             .join(' '))
+    else
+      super
+    end
+  end
 
   private
 

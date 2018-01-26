@@ -16,3 +16,4 @@ pt-BR:
         file_file_name: 'Nome do arquivo'
         file_file_size: 'Tamanho do arquivo (Bytes)'
         file_content_type: 'Content Type'
+        description: 'Descrição'
