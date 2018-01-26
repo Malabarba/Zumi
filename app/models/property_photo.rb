@@ -16,6 +16,7 @@ class PropertyPhoto < ApplicationRecord
   attachment :file,
              public: true,
              path: '/:style/:class/:basename.:extension',
+             s3_headers: { 'Cache-Control' => "max-age=#{365 * 24 * 60 * 60}"},
              styles: { thumb: '65x50#', small: '260x200>', medium: '500x400>' }
   validates_attachment :file,
                        presence: true,
