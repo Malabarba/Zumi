@@ -15,6 +15,7 @@ class PropertyPhoto < ApplicationRecord
 
   attachment :file,
              public: true,
+             path: '/:style/:class/:basename.:extension',
              styles: { thumb: '65x50#', small: '260x200>', medium: '500x400>' }
   validates_attachment :file,
                        presence: true,
@@ -37,6 +38,7 @@ class PropertyPhoto < ApplicationRecord
   private
 
   def randomize_name
-    self.file_file_name = SecureRandom.base64(30).tr('/', '_')
+    base = SecureRandom.base64(40).tr('/', '_')
+    self.file_file_name = "#{base}.#{File.extname(self.file_file_name || "")}"
   end
 end

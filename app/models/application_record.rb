@@ -32,13 +32,15 @@ class ApplicationRecord < ActiveRecord::Base
   class << self
     private
 
-    def attachment(name, public:, **opts)
+    def attachment(name, public:, path:, **opts)
       # bucket = "zumi-#{Rails.env}-paperclip#{public ? '' : '-private'}"
       bucket = "zumi-staging-paperclip#{public ? '' : '-private'}"
       s3_opts = if Rails.env.development? || Rails.env.test?
                   {}
                 else
                   { storage: :s3,
+                    url: ':s3_domain_url',
+                    path: path,
                     s3_region: 'sa-east-1',
                     s3_credentials: { bucket: bucket,
                                       access_key_id: ENV['AWS_ACCESS_KEY_ID'],
