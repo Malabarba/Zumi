@@ -5,7 +5,7 @@ class Address < ApplicationRecord
 
   validates(*permitted_params, presence: true)
   SERIALIZED_PARAMS = [*permitted_params, :lat, :lng].freeze
-  serialize_with(SERIALIZED_PARAMS)
+  serialize_with(*SERIALIZED_PARAMS)
   before_save :set_geolocation
 
   def to_s
