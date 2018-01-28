@@ -43,6 +43,7 @@ gem 'paperclip'
 gem 'paper_trail'
 gem 'paranoia'
 gem 'ransack'
+gem 'rest-client'
 gem 'role_model'
 
 gem 'faker'
