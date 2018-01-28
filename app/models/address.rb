@@ -4,12 +4,13 @@ class Address < ApplicationRecord
   end
 
   validates(*permitted_params, presence: true)
-  serialize_with(*permitted_params, :lat, :lng)
+  SERIALIZED_PARAMS = [*permitted_params, :lat, :lng].freeze
+  serialize_with(SERIALIZED_PARAMS)
   before_save :set_geolocation
 
   def to_s
-    permitted_params.map { |p| public_send(p).presence }
-                    .compact.join(', ')
+    SERIALIZED_PARAMS.map { |p| public_send(p).presence }
+                     .compact.join(', ')
   end
 
   def to_s_short
