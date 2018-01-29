@@ -1,11 +1,16 @@
 class User < ApplicationRecord
   def self.permitted_params
-    %i(email password password_confirmation first_name surname phone birth_date)
+    %i(email password password_confirmation first_name surname phone cpf birth_date)
   end
 
   admin_index_columns do
     %i(email first_name surname current_sign_in_at sign_in_count created_at)
   end
+
+  serialize_with(:email, :first_name, :surname, :phone,
+                 :cpf, :birth_date,
+                 :buy_visits, :sale_visits,
+                 :properties, :favorite_listings)
 
   include RoleModel
   include Tokenable

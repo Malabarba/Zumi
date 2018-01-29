@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   # root to: 'listings#index'
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get 'me', to: 'me#show'
-
       get 'listings', to: 'listings#index'
       get 'listings/neighborhoods', to: 'listings#neighborhoods'
       get 'listing/:id', to: 'listings#show'
@@ -17,6 +15,11 @@ Rails.application.routes.draw do
 
       post 'sessions', to: 'sessions#create'
       delete 'sessions', to: 'sessions#delete'
+
+      post 'me', to: 'me#create'
+      get 'me', to: 'me#show'
+      patch 'me', to: 'me#update'
+      # delete 'users', to: 'users#delete'
     end
   end
 
