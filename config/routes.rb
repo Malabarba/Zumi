@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
       get 'properties', to: 'properties#index'
       get 'property/:id', to: 'properties#show'
+
+      post 'sessions', to: 'sessions#create'
+      delete 'sessions', to: 'sessions#delete'
     end
   end
 
