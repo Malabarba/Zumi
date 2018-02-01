@@ -12,7 +12,7 @@ class Listing < ApplicationRecord
 
   before_create :assign_uniq_hash, :publish!
 
-  validates :price, :description, presence: true, if: :published?
+  validates :price, :description, presence: true
   validates :property, presence: true
   validates :property_id,
             uniqueness: { conditions: -> { published } },
