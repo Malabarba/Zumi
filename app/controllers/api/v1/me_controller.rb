@@ -1,6 +1,6 @@
 class Api::V1::MeController < Api::V1::ApiController
   def show
-    render(json: { user: current_user.as_json })
+    render(json: { user: current_user!.as_json })
   end
 
   def create
