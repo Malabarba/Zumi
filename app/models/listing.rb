@@ -10,7 +10,7 @@ class Listing < ApplicationRecord
   serialize_with(:id, :uniq_hash, :property, :price_cents, :furnished,
                  :published_at, :deleted_at)
 
-  before_create :assign_uniq_hash
+  before_create :assign_uniq_hash, :publish!
 
   validates :price, :description, presence: true, if: :published?
   validates :property, presence: true
