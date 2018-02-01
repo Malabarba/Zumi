@@ -1,17 +1,12 @@
 class Api::V1::PropertiesController < Api::V1::ApiController
-  before_action :ensure_user_is_seller
+  before_action :ensure_user_is_seller, except: :create
 
   def index
-    render json: { properties: scope.as_json(shallow: true) }
+    j properties: scope
   end
 
   def show
-    if current_user &&
-       find_property.owner == current_user
-      render json: { property: @property.as_json }
-    else
-      not_found
-    end
+    j property: find_property
   end
 
   private
@@ -21,7 +16,7 @@ class Api::V1::PropertiesController < Api::V1::ApiController
   end
 
   def scope
-    Property.includes(:address).where(owner_id: current_user.id)
+    current_user!&.properties.includes(:address)
   end
 
   # Use callbacks to share common setup or constraints between actions.

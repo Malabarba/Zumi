@@ -1,36 +1,22 @@
 class Api::V1::MeController < Api::V1::ApiController
   def show
-    render(json: { user: current_user!.as_json })
+    j user: current_user
   end
 
   def create
-    if (@user = User.new(user_params(:create))).save
-      sign_in(@user)
-      render(json: { user: @user.as_json })
-    else
-      render(json: { errors: @user.errors.messages }, status: 422)
-    end
+    @user = User.create!(user_params(:create))
+    sign_in(@user)
+    j user: @user
   end
 
   def update
-    if (@user = current_user!).update(user_params(:update))
-      render(json: { user: @user.as_json })
-    else
-      render(json: { errors: @user.errors.messages }, status: 422)
-    end
+    j user: current_user!.update!(user_params(:update))
   end
 
   def update_password
     current_password = params.require(:user).require(:current_password)
-    if (@user = current_user!).valid_password?(current_password)
-      if @user.update(password: params.require(:user).require(:new_password))
-        render(json: { user: @user.as_json })
-      else
-        render(json: { errors: @user.errors.messages }, status: 422)
-      end
-    else
-      unauthorized
-    end
+    (@user = current_user!).validate_password!(current_password)
+    j user: @user.update!(password: params.require(:user).require(:new_password))
   end
 
   private

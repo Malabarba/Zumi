@@ -13,6 +13,14 @@ class ApplicationRecord < ActiveRecord::Base
     I18n.backend.store_translations(:'pt-BR', {activerecord: {attributes: hash } })
   end
 
+  def update!(*)
+    super && self
+  end
+
+  def save!(*)
+    super && self
+  end
+
   def add_error(key, msg)
     errors.add(key, msg)
     false

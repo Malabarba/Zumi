@@ -48,6 +48,11 @@ class User < ApplicationRecord
     true
   end
 
+  class InvalidPassword < StandardError; end
+  def validate_password!(password)
+    raise InvalidPassword unless valid_password?(password)
+  end
+
   private
 
   def set_default_role

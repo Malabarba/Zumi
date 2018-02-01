@@ -8,21 +8,17 @@ class Api::V1::ListingsController < Api::V1::ApiController
     search = search.result
                    .limit(PER_PAGE)
                    .offset(page * PER_PAGE)
-    render json: { count: search.count,
-                   listings: search.as_json(shallow: true) }
+    j count: search.count, listings: search
   end
 
   def neighborhoods
     @neighborhoods = scope.order('addresses.neighborhood').group('addresses.neighborhood').count
-    render json: { neighborhoods: @neighborhoods.map { |n, c| { name: n, count: c } } }
+    j neighborhoods: @neighborhoods.map { |n, c| { name: n, count: c } }
   end
 
   def show
-    if find_listing.published?
-      render json: { listing: @listing.as_json }
-    else
-      not_found
-    end
+    return not_found unless find_listing.published?
+    j listing: @listing
   end
 
   private
@@ -33,7 +29,7 @@ class Api::V1::ListingsController < Api::V1::ApiController
 
   # Use callbacks to share common setup or constraints between actions.
   def find_listing
-    @listing ||= scope.find_by(uniq_hash: params[:id])
+    @listing ||= scope.find_by!(uniq_hash: params[:id])
   end
 
   PROPERTY_FILTERS = (

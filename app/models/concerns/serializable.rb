@@ -3,7 +3,7 @@ module Serializable
 
   ONE_WEEK = 7 * 24 * 60 * 60
 
-  def as_json(opts = {})
+  def as_json(**opts)
     out = {}
     self.class.serialization.each do |method, **spec|
       if spec[:type] == :association
@@ -27,6 +27,10 @@ module Serializable
   end
 
   class_methods do
+    def as_json(**opts)
+      super(opts.merge(shallow: true))
+    end
+
     def serialize_with(*methods, **methods_hash)
       methods.each { |m| methods_hash[m] = nil }
       @serialize_with = methods_hash

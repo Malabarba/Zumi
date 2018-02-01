@@ -5,11 +5,15 @@ module Rescuable
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from ActionController::UnknownFormat, with: :unknown_format
     rescue_from Rescuable::AccessDenied, with: :forbidden
-    rescue_from Rescuable::Unauthorized, with: :unauthorized
+    rescue_from User::InvalidPassword, with: :unauthorized
     rescue_from ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved, with: :bad_record
     rescue_from ActiveRecord::InvalidForeignKey, with: :invalid_key
     # rescue_from Paginatable::InvalidSortOrder, with: :invalid_sort
     rescue_from Rescuable::AlreadyLoggedIn, with: :already_logged_in
+    rescue_from ActiveRecord::RecordInvalid do |e|
+      render(json: { errors: e.record&.errors&.messages || [] },
+             status: 422)
+    end
 
     protected
 
@@ -57,7 +61,7 @@ module Rescuable
     end
   end
 
-  class AlreadyLoggedIn < StandardError;  end
-  class AccessDenied < StandardError;  end
-  class Unauthorized < StandardError;  end
+  class AlreadyLoggedIn < StandardError; end
+  class AccessDenied < StandardError; end
+  class Unauthorized < StandardError; end
 end
