@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post 'me', to: 'me#create'
       get 'me', to: 'me#show'
       patch 'me', to: 'me#update'
+      patch 'me/password', to: 'me#update_password'
       # delete 'users', to: 'users#delete'
     end
   end

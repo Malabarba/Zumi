@@ -21,18 +21,23 @@ class Api::V1::MeController < Api::V1::ApiController
   end
 
   def update_password
-    if (@user = current_user).update(user_params(:update))
-      render(json: { user: @user.as_json })
+    current_password = params.require(:user).require(:current_password)
+    if (@user = current_user!).valid_password?(current_password)
+      if @user.update(password: params.require(:user).require(:new_password))
+        render(json: { user: @user.as_json })
+      else
+        render(json: { errors: @user.errors.messages }, status: 422)
+      end
     else
-      render(json: { errors: @user.errors.messages }, status: 422)
+      unauthorized
     end
   end
 
   private
 
   def user_params(action)
-    permitted = %i(email password first_name surname phone birth_date)
-    permitted << :cpf if action == :create
+    permitted = %i(email first_name surname phone birth_date)
+    permitted += %i(cpf password) if action == :create
     params.require(:user).permit(*permitted)
   end
 end
