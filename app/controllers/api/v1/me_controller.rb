@@ -4,7 +4,7 @@ class Api::V1::MeController < Api::V1::ApiController
   end
 
   def create
-    if (@user = User.new(user_params)).save
+    if (@user = User.new(user_params(:create))).save
       sign_in(@user)
       render(json: { user: @user.as_json })
     else
@@ -13,7 +13,15 @@ class Api::V1::MeController < Api::V1::ApiController
   end
 
   def update
-    if (@user = current_user).update(user_params)
+    if (@user = current_user!).update(user_params(:update))
+      render(json: { user: @user.as_json })
+    else
+      render(json: { errors: @user.errors.messages }, status: 422)
+    end
+  end
+
+  def update_password
+    if (@user = current_user).update(user_params(:update))
       render(json: { user: @user.as_json })
     else
       render(json: { errors: @user.errors.messages }, status: 422)

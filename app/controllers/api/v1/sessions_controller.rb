@@ -1,6 +1,4 @@
 class Api::V1::SessionsController < Api::V1::ApiController
-  skip_before_action :verify_authenticity_token
-
   def create
     session_params = params.require(:user).permit(:email, :password)
     @user = User.find_for_authentication(email: session_params[:email])
