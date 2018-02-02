@@ -16,7 +16,7 @@ class Visit < ApplicationRecord
   belongs_to :visitor, optional: true, class_name: 'User', inverse_of: :sale_visits
 
   validates :listing, :buyer, :at, presence: true
-  validate :availability
+  validate :availability, on: :create
 
   status_values %i(pending confirmed canceled bailed), default: :pending
   scope :to_go, -> { confirmed.where('at::date >= ?', Time.zone.today) }
