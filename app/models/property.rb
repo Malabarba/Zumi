@@ -21,11 +21,12 @@ class Property < ApplicationRecord
   serialize_with(:id, :uniq_hash, :address, :photos, :type, :type_text,
                  :toilet_count, :bath_count, :bedroom_count,
                  :lot_size_m2, :usable_size_m2,
-                 :condo_cost_cents,
-                 :floor)
+                 :condo_cost_cents, :floor,
+                 :current_listing)
 
   include FilterableEnumerize
 
+  has_one :current_listing, -> { published }, class_name: 'Listing'
   has_many :listings, inverse_of: :property
   has_many :favorited_by, through: :listings
   has_many :photos, class_name: 'PropertyPhoto', inverse_of: :property

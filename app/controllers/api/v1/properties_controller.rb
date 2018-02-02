@@ -16,7 +16,7 @@ class Api::V1::PropertiesController < Api::V1::ApiController
   end
 
   def scope
-    current_user!&.properties.includes(:address)
+    current_user!&.properties.includes(:address, :current_listing)
   end
 
   # Use callbacks to share common setup or constraints between actions.

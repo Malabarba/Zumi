@@ -3,9 +3,11 @@ module Serializable
 
   ONE_WEEK = 7 * 24 * 60 * 60
 
-  def as_json(**opts)
+  def as_json(stack: [param_key.to_sym], **opts)
     out = {}
     self.class.serialization.each do |method, **spec|
+      next if stack.include?(method)
+      opts = opts.merge(stack: stack + [method])
       if spec[:type] == :association
         if association_cached?(method) || !opts[:shallow]
           if spec[:macro] == :has_many
