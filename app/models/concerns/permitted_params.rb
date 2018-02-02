@@ -9,6 +9,10 @@ module PermittedParams
     self.class.permitted_params(*args)
   end
 
+  def permitted_update!(params)
+    params.require(param_key).permit(permitted_params(:update))
+  end
+
   class_methods do
     def permitted_params(*modifiers)
       @permitted_params[modifiers.sort] ||
