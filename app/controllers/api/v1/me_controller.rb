@@ -22,8 +22,6 @@ class Api::V1::MeController < Api::V1::ApiController
   private
 
   def user_params(action)
-    permitted = %i(email first_name surname phone birth_date)
-    permitted += %i(cpf password) if action == :create
-    params.require(:user).permit(*permitted)
+    params.require(:user).permit(User.permitted_params(action))
   end
 end

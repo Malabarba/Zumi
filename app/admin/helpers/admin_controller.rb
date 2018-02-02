@@ -9,7 +9,7 @@ module AdminController
 
       @model = model
 
-      update_form(model.permitted_params)
+      update_form(model)
 
       index do
         id_column
@@ -110,14 +110,21 @@ module AdminController
       end
     end
 
-    def update_form(spec)
-      permit_params(*spec)
+    def update_form(model)
+      permit_params do
+        AdminController::Helpers.pp_for(model, request)
+      end
 
       form do |f|
+        spec = AdminController::Helpers.pp_for(model, request)
         f.semantic_errors(*f.object.errors.keys)
         f.inputs { AdminForm.make_inputs(f, spec, params) }
         f.actions
       end
+    end
+
+    def self.pp_for(model, request)
+      model.permitted_params(:admin, *(%i(create update) & [request.method.to_sym]))
     end
   end
 end

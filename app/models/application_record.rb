@@ -26,15 +26,8 @@ class ApplicationRecord < ActiveRecord::Base
     false
   end
 
-  def permitted_params
-    self.class.permitted_params
-  end
-
-  def param_key
-    self.class.model_name.param_key
-  end
-
   include Serializable
+  include PermittedParams
   include Actionable
 
   class << self

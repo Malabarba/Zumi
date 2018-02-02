@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-  def self.permitted_params
-    %i(email password password_confirmation first_name surname phone cpf birth_date)
+  permit_params do
+    permit %i(email first_name surname phone birth_date)
+    permit %i(cpf password) if create?
   end
 
   admin_index_columns do

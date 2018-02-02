@@ -1,17 +1,9 @@
 class Property < ApplicationRecord
-  def self.permitted_params
-    [:owner_id,
-     :type,
-     :lot_size_m2,
-     :usable_size_m2,
-     :condo_cost,
-     :toilet_count,
-     :bath_count,
-     :bedroom_count,
-     :age_in_years,
-     :floor,
-     :building_height,
-     address_attributes: [:id, *Address.permitted_params]]
+  permit_params do
+    permit %i(owner_id) if admin? && create?
+    permit %i(type lot_size_m2 usable_size_m2 condo_cost age_in_years)
+    permit %i(floor building_height toilet_count bath_count bedroom_count)
+    permit [address_attributes: [:id, *Address.permitted_params]]
   end
 
   admin_index_columns do

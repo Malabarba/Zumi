@@ -1,6 +1,8 @@
 class Visit < ApplicationRecord
-  def self.permitted_params
-    %i(listing_id buyer_id visitor_id at)
+  permit_params do
+    permit %i(listing_id at) if create?
+    permit %i(buyer_id) if admin? && create?
+    permit %i(visitor_id) if admin?
   end
 
   admin_index_columns do

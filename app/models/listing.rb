@@ -1,6 +1,8 @@
 class Listing < ApplicationRecord
-  def self.permitted_params
-    [:property_id, :description, :price, :minimum_down_payment, :furnished]
+  permit_params do
+    next unless create?
+    permit %i(description price minimum_down_payment furnished)
+    permit %i(property_id) if admin?
   end
 
   admin_index_columns do

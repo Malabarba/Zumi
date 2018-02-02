@@ -1,6 +1,6 @@
 class Address < ApplicationRecord
-  def self.permitted_params
-    %i(street number complement neighborhood zip_code city state)
+  permit_params do
+    permit %i(street number complement neighborhood zip_code city state)
   end
 
   validates(*permitted_params, presence: true)
