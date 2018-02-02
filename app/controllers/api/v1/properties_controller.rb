@@ -9,6 +9,18 @@ class Api::V1::PropertiesController < Api::V1::ApiController
     j property: find_property
   end
 
+  def create
+    j property: scope.permitted_create!(params)
+  end
+
+  def update
+    j property: find_property.permitted_update!(params)
+  end
+
+  def list
+    j listing: find_property.listings.permitted_create!(params)
+  end
+
   private
 
   def ensure_user_is_seller

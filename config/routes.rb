@@ -11,7 +11,10 @@ Rails.application.routes.draw do
       get 'listing/:id', to: 'listings#show'
 
       get 'properties', to: 'properties#index'
+      post 'properties', to: 'properties#create'
       get 'property/:id', to: 'properties#show'
+      patch 'property/:id', to: 'properties#update'
+      post 'property/:id/listings', to: 'properties#list'
 
       post 'sessions', to: 'sessions#create'
       delete 'sessions', to: 'sessions#delete'
