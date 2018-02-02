@@ -55,12 +55,12 @@ class Listing < ApplicationRecord
   end
 
   defaction :publish, 'Publicar', user_ability: is_owner,
-            errors: { :idle? => 'já foi publicada' } do
+            unless: { :idle? => 'já foi publicada' } do
     touch(:published_at)
   end
 
   defaction :remove, 'Remover', user_ability: is_owner,
-            errors: { :published? => 'não está publicada' } do
+            unless: { :published? => 'não está publicada' } do
     touch(:deleted_at)
   end
 end
