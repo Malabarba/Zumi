@@ -79,8 +79,8 @@ module AdminController
   end
 
   module Helpers
-    def resource_action(action:, label:, params: nil, link_data: nil, **_)
-      args = params.presence
+    def resource_action(action:, label:, permitted_params: nil, link_data: nil, **_)
+      args = permitted_params.presence
       link_method = args ? :get : :patch
       action_item action, only: [:show] do
         if resource.may?(action, user: current_user)
@@ -91,7 +91,7 @@ module AdminController
 
       member_action action, method: [:patch, link_method].uniq do
         if request.patch?
-          permitted = params.require(resource.param_key).permit(*(args || []))
+          permitted = args ? params.require(resource.param_key).permit(*(args || [])) : {}
           msg = ["#{action}!",
                  { args: permitted.to_h.symbolize_keys, user: current_user }]
           if resource.public_send(*msg)

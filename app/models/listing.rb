@@ -54,16 +54,13 @@ class Listing < ApplicationRecord
     true
   end
 
-  IS_OWNER = proc { |user:| user == owner }
-
-  defaction :publish, 'Publicar', ability: :idle?, user_ability: IS_OWNER,
-            errors: { :published? => 'já está publicado',
-                      :deleted_at? => 'foi publicado e removido' } do
+  defaction :publish, 'Publicar', user_ability: is_owner,
+            errors: { :idle? => 'já foi publicada' } do
     touch(:published_at)
   end
 
-  defaction :remove, 'Remover', ability: :published?, user_ability: IS_OWNER,
-            errors: { :deleted_at? => 'já está removido' } do
+  defaction :remove, 'Remover', user_ability: is_owner,
+            errors: { :published? => 'não está publicada' } do
     touch(:deleted_at)
   end
 end

@@ -6,32 +6,34 @@ module Actionable
   end
 
   class_methods do
+    def is_owner
+      proc { |user:| user == owner }
+    end
+
     def actions
       @actions || {}
     end
 
     def defaction(action, label,
-                  errors: {}, ability: nil, user_ability: nil,
-                  params: [], admin: false, &block)
-      may = proc do |context = {}|
-        next false unless able?(ability, context)
-        unless context[:user]&.admin?
-          next false if admin || !able?(user_ability, context)
-        end
+                  user_ability: nil, params: [],
+                  **opts, &block)
+      opts[:unless] ||= {}
+      opts[:if] ||= {}
 
-        errors.each do |cond, error|
-          next unless able?(cond, context)
-          self.errors.add(:base, error)
-          break
-        end
-        self.errors.blank?
+      may = proc do |context = {}|
+        next false if (user_ability == :admin || !evals_true?(user_ability, context)) &&
+                      !context[:user]&.admin?
+        next true unless (e = (opts[:unless].find { |cond, _| !evals_true?(cond, context) } ||
+                               opts[:if].find { |cond, _| evals_true?(cond, context) }) )
+        self.errors.add(:base, e[1]) if context[:with_errors]
+        false
       end
 
       @actions ||= {}
-      @actions[action] = { params: params, ability: may, action: action, label: label }.freeze
+      @actions[action] = { permitted_params: params, ability: may, action: action, label: label }.freeze
 
-      define_method("#{action}!") do |args:, **opts|
-        next false unless may?(action, opts)
+      define_method("#{action}!") do |args: {}, **opts|
+        next false unless may?(action, opts.merge(with_errors: true))
         instance_exec(*args, &block)
       end
     end
@@ -39,7 +41,7 @@ module Actionable
 
   private
 
-  def able?(ability, *args)
+  def evals_true?(ability, *args)
     case ability
     when nil then true
     when Symbol then instance_eval(&ability)
