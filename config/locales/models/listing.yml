@@ -5,7 +5,7 @@ pt-BR:
         listing:
           attributes:
             property_id:
-              taken: 'já tem uma listagem ativa'
+              taken: 'já tem um anúncio'
     models:
       listing:
         one: 'Anúncio'
