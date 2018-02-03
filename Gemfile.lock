@@ -696,6 +696,7 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
+    oj (2.16.1)
     orm_adapter (0.5.0)
     paper_trail (8.1.2)
       activerecord (>= 4.2, < 5.2)
@@ -764,6 +765,8 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     role_model (0.8.2)
+    rollbar (2.15.5)
+      multi_json
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -852,6 +855,7 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   money-rails
+  oj (~> 2.16.1)
   paper_trail
   paperclip
   paranoia
@@ -863,6 +867,7 @@ DEPENDENCIES
   ransack
   rest-client
   role_model
+  rollbar
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver

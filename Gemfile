@@ -39,12 +39,14 @@ gem 'devise'
 gem 'enumerize'
 gem 'jquery-rails'
 gem 'money-rails'
+gem 'oj', '~> 2.16.1' # For Rollbar
 gem 'paperclip'
 gem 'paper_trail'
 gem 'paranoia'
 gem 'ransack'
 gem 'rest-client'
 gem 'role_model'
+gem 'rollbar'
 
 gem 'faker'
 group :development, :test do
