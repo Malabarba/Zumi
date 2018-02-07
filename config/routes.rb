@@ -24,10 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'index.html', to: 'static#index_file'
+
+  ActiveAdmin.routes(self)
+
   get '*a', to: 'static#index_file'
   get '*a/*b', to: 'static#index_file'
   get '*a/*b/*c', to: 'static#index_file'
-
-  ActiveAdmin.routes(self)
 end
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
