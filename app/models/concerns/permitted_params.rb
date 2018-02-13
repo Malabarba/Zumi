@@ -10,7 +10,8 @@ module PermittedParams
   end
 
   def permitted_update!(params)
-    params.require(param_key).permit(permitted_params(:update))
+    update!(params.require(param_key)
+                  .permit(permitted_params(:update)))
   end
 
   class_methods do
@@ -20,7 +21,8 @@ module PermittedParams
     end
 
     def permitted_create!(params)
-      params.require(model_name.param_key).permit(permitted_params(:create))
+      create!(params.require(model_name.param_key)
+                    .permit(permitted_params(:create)))
     end
 
     private
