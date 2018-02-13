@@ -9,7 +9,7 @@ class User < ApplicationRecord
   end
 
   serialize_with(:email, :first_name, :surname, :phone,
-                 :cpf, :birth_date,
+                 :cpf, :birth_date, :roles,
                  :buy_visits, :sale_visits,
                  :properties, :favorite_listings)
 
@@ -57,7 +57,7 @@ class User < ApplicationRecord
   private
 
   def set_default_role
-    self.roles = [:seller] if self.roles.blank?
+    self.roles = [:buyer] if self.roles.blank?
   end
 
   def fix_common_user_mistakes
