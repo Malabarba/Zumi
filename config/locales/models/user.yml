@@ -5,7 +5,9 @@ pt-BR:
         user:
           attributes:
             cpf:
-              taken: 'já está vinculado à um usuário'
+              taken: 'já está vinculado a outro usuário'
+            email:
+              taken: 'já está vinculado a outro usuário'
     models:
       user:
         one: 'Usuário'
