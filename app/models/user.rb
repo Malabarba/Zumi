@@ -54,6 +54,27 @@ class User < ApplicationRecord
     raise InvalidPassword unless valid_password?(password)
   end
 
+  def cpf=(value)
+    self[:cpf] = self.class.normalized_cpf(value)
+  end
+
+  def formatted_cpf
+    self.class.formatted_cpf(cpf)
+  end
+
+  def normalized_cpf
+    self.class.normalized_cpf(cpf)
+  end
+
+  def self.normalized_cpf(cpf)
+    cpf.scan(/\d/).join.rjust(11, '0') if cpf.present?
+  end
+
+  def self.formatted_cpf(cpf)
+    return if (clean = normalized_cpf(cpf)).blank?
+    "#{clean[0, 3]}.#{clean[3, 3]}.#{clean[6, 3]}-#{clean[9, 2]}"
+  end
+
   private
 
   def set_default_role
