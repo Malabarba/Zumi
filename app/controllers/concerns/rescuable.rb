@@ -11,7 +11,8 @@ module Rescuable
     # rescue_from Paginatable::InvalidSortOrder, with: :invalid_sort
     rescue_from Rescuable::AlreadyLoggedIn, with: :already_logged_in
     rescue_from ActiveRecord::RecordInvalid do |e|
-      render(json: { errors: e.record&.errors&.messages || [] },
+      render(json: { errors: e.record&.errors&.messages || {},
+                     messages: e.record&.errors&.full_messages || {} },
              status: 422)
     end
 
@@ -39,10 +40,6 @@ module Rescuable
 
     def invalid_key
       render json: { message: { error_messages: ['One of the ids provided is not valid'] } }, status: 400
-    end
-
-    def bad_record
-      render json: { message: { error_messages: resource_instance.errors.messages.to_json } }, status: 400
     end
 
     def unprocessable_entity

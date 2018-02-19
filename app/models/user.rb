@@ -28,7 +28,7 @@ class User < ApplicationRecord
   has_many :user_favorite_listings, inverse_of: :user
   has_many :favorite_listings, through: :user_favorite_listings, source: :listing
 
-  validates :cpf, :email, :password, :first_name, :surname, presence: true
+  validates :cpf, :email, :encrypted_password, :first_name, :surname, presence: true
   validates :cpf, uniqueness: { allow_nil: true }
   attr_readonly :cpf
 
