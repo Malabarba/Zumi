@@ -17,7 +17,7 @@ class Listing < ApplicationRecord
   validates :price, :description, presence: true
   validates :property, presence: true
   validates :property_id,
-            uniqueness: { conditions: -> { published } },
+            uniqueness: { conditions: -> { published? } },
             if: :published?
 
   has_many :visits, inverse_of: :listing
