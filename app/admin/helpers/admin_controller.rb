@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdminController
   def self.register(model, destroy_action: false, &block)
     ActiveAdmin.register(model) do
@@ -25,7 +27,8 @@ module AdminController
           end
           model.columns_hash.each do |k, _adapter|
             next if k =~ /^id$|_(password|token|id)$/
-            if  k == 'roles_mask'
+
+            if k == 'roles_mask'
               row(:roles) { resource.roles.to_a }
             else
               col = k.gsub(/_(cents)$/, '').to_sym
@@ -36,6 +39,7 @@ module AdminController
           tabs do
             model.columns_hash.each do |k, _adapter|
               next unless k =~ /_file_name$/
+
               k = k.gsub(/_file_name$/, '')
               tab(model.human_attribute_name(k)) do
                 display_or_link_attachment(resource, k)
@@ -45,6 +49,7 @@ module AdminController
               next if k == 'versions'
               next unless ref.macro == :has_many &&
                           ref.klass.try(:index_columns, current_user)
+
               tab(model.human_attribute_name(k)) do
                 table_for(resource.public_send(k)) do
                   column(ref.klass.model_name.human) { |a| a }
@@ -85,7 +90,7 @@ module AdminController
       action_item action, only: [:show] do
         if resource.may?(action, user: current_user)
           path = public_send("#{action}_admin_#{resource.param_key}_path", resource, redirect_uri: request.path)
-          link_to label, path, { method: link_method, data: link_data }
+          link_to label, path, method: link_method, data: link_data
         end
       end
 
@@ -124,7 +129,7 @@ module AdminController
     end
 
     def self.pp_for(model, request)
-      model.permitted_params(:admin, *(%i(create update) & [request.method.to_sym]))
+      model.permitted_params(:admin, *(%i[create update] & [request.method.to_sym]))
     end
   end
 end
@@ -144,6 +149,7 @@ class ActiveAdmin::ResourceController
 
   def check_model_errors(object)
     return unless object.errors.any?
+
     flash[:error] ||= []
     flash[:error].concat(object.errors.full_messages)
   end

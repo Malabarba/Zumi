@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::PropertiesController < Api::V1::ApiController
   before_action :ensure_user_is_seller, except: :create
 

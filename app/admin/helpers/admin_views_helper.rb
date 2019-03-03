@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdminViewsHelper
   def tab_title(string)
     string.dup.tap do |s|
@@ -24,7 +26,7 @@ module AdminViewsHelper
 
   ONE_WEEK = 60 * 60 * 24 * 7
 
-  def display_or_link_attachment(object, attribute, *label_attributes)
+  def display_or_link_attachment(object, attribute, *_label_attributes)
     return if object.public_send(attribute).blank?
 
     content_type = object.public_send("#{attribute}_content_type")
@@ -73,6 +75,7 @@ module AdminViewsHelper
 
   def translated_yes_or_no(bool)
     return if bool.blank?
+
     bool == 'yes' ? 'Sim' : 'Não'
   end
 end

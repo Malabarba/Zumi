@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Address < ApplicationRecord
   permit_params do
-    permit %i(street number complement neighborhood zip_code city state)
+    permit %i[street number complement neighborhood zip_code city state]
   end
 
   validates(*permitted_params, presence: true)
@@ -28,6 +30,7 @@ class Address < ApplicationRecord
                                                 open_timeout: 10,
                                                 timeout: 10).execute
     return if (result = JSON.parse(response_geo_code)['results'].first).blank?
+
     lat_lng = result['geometry']['location']
     assign_attributes(lat: lat_lng['lat'].to_f, lng: lat_lng['lng'].to_f)
   rescue StandardError => _

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 active_admin_form_for [:admin, resource], url: request.url, method: :patch do |f|
   f.semantic_errors(*f.object.errors.keys)
   f.inputs { AdminForm.make_inputs(f, permitted_params) }

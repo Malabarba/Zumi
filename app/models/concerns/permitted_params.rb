@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PermittedParams
   extend ActiveSupport::Concern
 
@@ -47,7 +49,7 @@ module PermittedParams
   end
 
   class Compiler
-    MODIFIERS = %i(admin create update).freeze
+    MODIFIERS = %i[admin create update].freeze
     MODIFIER_OPTIONS = MODIFIERS.reduce([[]]) { |acc, m| acc + acc.map { |ms| ms + [m] } }.sort.freeze
 
     def compile(&block)

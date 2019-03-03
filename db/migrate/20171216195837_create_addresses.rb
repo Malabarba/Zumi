@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAddresses < ActiveRecord::Migration[5.1]
   def change
     create_table :addresses do |t|
@@ -15,6 +17,6 @@ class CreateAddresses < ActiveRecord::Migration[5.1]
     add_index :addresses, :neighborhood
     add_index :addresses, :city
     add_index :addresses, :state
-    add_index :addresses, [:number, :complement, :zip_code], unique: true
+    add_index :addresses, %i[number complement zip_code], unique: true
   end
 end

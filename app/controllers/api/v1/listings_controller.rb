@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::ListingsController < Api::V1::ApiController
   PER_PAGE = 30
 
@@ -18,13 +20,14 @@ class Api::V1::ListingsController < Api::V1::ApiController
 
   def show
     return not_found unless find_listing.published?
+
     j listing: @listing
   end
 
   private
 
   def scope
-    Listing.includes(property: [:address, :photos]).published
+    Listing.includes(property: %i[address photos]).published
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -33,12 +36,13 @@ class Api::V1::ListingsController < Api::V1::ApiController
   end
 
   PROPERTY_FILTERS = (
-    %i(furnished_true furnished_false neighborhood_in neighborhood_eq) +
-    %i(toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2 price_cents)
+    %i[furnished_true furnished_false neighborhood_in neighborhood_eq] +
+    %i[toilet_count bath_count bedroom_count lot_size_m2 usable_size_m2 price_cents]
       .flat_map { |f| [:"#{f}_gteq", :"#{f}_lteq"] }
   ).freeze
   def search_opts
     return {} unless (q = params[:q])
+
     q.permit(:s, *PROPERTY_FILTERS).to_h.symbolize_keys
   end
 end

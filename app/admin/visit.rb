@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 AdminController.register(Visit) do
   config.sort_order = 'at_asc'
 

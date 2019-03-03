@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Actionable
   extend ActiveSupport::Concern
 
@@ -24,8 +26,9 @@ module Actionable
         next false if (user_ability == :admin || !evals_true?(user_ability, context)) &&
                       !context[:user]&.admin?
         next true unless (e = (opts[:unless].find { |cond, _| !evals_true?(cond, context) } ||
-                               opts[:if].find { |cond, _| evals_true?(cond, context) }) )
-        self.errors.add(:base, e[1]) if context[:with_errors]
+                               opts[:if].find { |cond, _| evals_true?(cond, context) }))
+
+        errors.add(:base, e[1]) if context[:with_errors]
         false
       end
 
@@ -34,6 +37,7 @@ module Actionable
 
       define_method("#{action}!") do |args: {}, **opts|
         next false unless may?(action, opts.merge(with_errors: true))
+
         instance_exec(*args, &block)
       end
     end

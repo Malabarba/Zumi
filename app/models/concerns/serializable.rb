@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Serializable
   extend ActiveSupport::Concern
 
@@ -7,14 +9,15 @@ module Serializable
     out = {}
     self.class.serialization.each do |method, **spec|
       next if stack.include?(method)
+
       opts = opts.merge(stack: stack + [method])
       if spec[:type] == :association
         if association_cached?(method) || !opts[:shallow]
-          if spec[:macro] == :has_many
-            out[method] = send(method)&.as_json(opts.merge(shallow: true))
-          else
-            out[method] = send(method)&.as_json(opts)
-          end
+          out[method] = if spec[:macro] == :has_many
+                          send(method)&.as_json(opts.merge(shallow: true))
+                        else
+                          send(method)&.as_json(opts)
+                        end
         end
       elsif spec[:type] == :file
         file = send(method)
@@ -40,6 +43,7 @@ module Serializable
 
     def serialization
       return @serialization if @serialization
+
       @serialization = (@serialize_with || []).map { |k, v| make_spec(k, v) }.to_h
     end
 

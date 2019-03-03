@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   permit_params do
-    permit %i(email first_name surname phone birth_date)
-    permit %i(cpf password) if create?
+    permit %i[email first_name surname phone birth_date]
+    permit %i[cpf password] if create?
   end
 
   admin_index_columns do
-    %i(email first_name surname current_sign_in_at sign_in_count created_at)
+    %i[email first_name surname current_sign_in_at sign_in_count created_at]
   end
 
   serialize_with(:email, :first_name, :surname, :phone,
@@ -72,13 +74,14 @@ class User < ApplicationRecord
 
   def self.formatted_cpf(cpf)
     return if (clean = normalized_cpf(cpf)).blank?
+
     "#{clean[0, 3]}.#{clean[3, 3]}.#{clean[6, 3]}-#{clean[9, 2]}"
   end
 
   private
 
   def set_default_role
-    self.roles = [:buyer] if self.roles.blank?
+    self.roles = [:buyer] if roles.blank?
   end
 
   def fix_common_user_mistakes

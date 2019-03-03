@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::MeController < Api::V1::ApiController
   def show
     j user: current_user

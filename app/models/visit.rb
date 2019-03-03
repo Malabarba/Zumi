@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class Visit < ApplicationRecord
   permit_params do
-    permit %i(listing_id at) if create?
-    permit %i(buyer_id) if admin? && create?
-    permit %i(visitor_id) if admin?
+    permit %i[listing_id at] if create?
+    permit %i[buyer_id] if admin? && create?
+    permit %i[visitor_id] if admin?
   end
 
   admin_index_columns do
-    %i(at status_text buyer_phone buyer visitor)
+    %i[at status_text buyer_phone buyer visitor]
   end
 
   serialize_with(:at, :status)
@@ -20,23 +22,23 @@ class Visit < ApplicationRecord
   validates :listing, :buyer, :at, presence: true
   validate :availability, on: :create
 
-  status_values %i(pending confirmed canceled bailed), default: :pending
+  status_values %i[pending confirmed canceled bailed], default: :pending
   scope :to_go, -> { confirmed.where('at::date >= ?', Time.zone.today) }
 
   defaction :confirm, 'Confirmar', user_ability: :admin,
-            if: { :confirmed? => 'já está confirmada'} do
+                                   if: { confirmed?: 'já está confirmada' } do
     update(status: :confirmed)
   end
 
   defaction :cancel, 'Cancelar', user_ability: :admin,
-            if: { :canceled? => 'já está cancelada',
-                  :bailed? => 'já está confirmada' } do
+                                 if: { canceled?: 'já está cancelada',
+                                       bailed?: 'já está confirmada' } do
     update(status: :canceled)
   end
 
   defaction :bailed, 'Comprador Deu Bolo', user_ability: :admin,
-            unless: { :confirmed? => 'não está confirmada' },
-            if: { :future? => 'ainda não passou' } do
+                                           unless: { confirmed?: 'não está confirmada' },
+                                           if: { future?: 'ainda não passou' } do
     update(status: :bailed)
   end
 

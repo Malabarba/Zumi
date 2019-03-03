@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 AdminController.register(User) do
   filter :email
   filter :cpf

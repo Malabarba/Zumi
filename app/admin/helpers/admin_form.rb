@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AdminForm
   def self.make_inputs(f, spec, query_params)
     spec.each do |p|

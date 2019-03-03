@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -16,7 +18,7 @@ module Imo
     # -- all .rb files in that directory are automatically loaded.
 
     # config.api_only = false
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/admin/helpers  #{config.root}/lib/concerns #{config.root}/app/serializers/concerns)
+    config.autoload_paths += %W[#{config.root}/lib #{config.root}/app/admin/helpers #{config.root}/lib/concerns #{config.root}/app/serializers/concerns]
     config.time_zone = 'Brasilia'
     config.encoding = 'utf-8'
     config.to_prepare { Devise::Mailer.layout 'mail' }
@@ -38,9 +40,11 @@ module Imo
 
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
-      YAML.load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?(env_file)
+      if File.exist?(env_file)
+        YAML.safe_load(File.open(env_file)).each do |key, value|
+          ENV[key.to_s] = value
+        end
+      end
     end
   end
 end

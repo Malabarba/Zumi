@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FilterableEnumerize
   extend ActiveSupport::Concern
 
@@ -12,7 +14,7 @@ module FilterableEnumerize
           collection: -> { klass.send(column).values.map { |value| [value.text, value] } } }
       end
       super
-      hash = {activerecord: {attributes: {model_name.param_key => {"#{column}_text" => human_attribute_name(column)}}}}
+      hash = { activerecord: { attributes: { model_name.param_key => { "#{column}_text" => human_attribute_name(column) } } } }
       I18n.backend.store_translations(:'pt-BR', hash)
     end
   end
