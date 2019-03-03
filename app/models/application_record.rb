@@ -35,7 +35,7 @@ class ApplicationRecord < ActiveRecord::Base
 
     def attachment(name, public:, path:, **opts)
       # bucket = "zumi-#{Rails.env}-paperclip#{public ? '' : '-private'}"
-      bucket = "zumi-staging-paperclip#{public ? '' : '-private'}"
+      bucket = "zumi-photos-staging#{public ? '' : '-private'}"
       s3_opts = if Rails.env.development? || Rails.env.test?
                   {}
                 else
