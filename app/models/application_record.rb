@@ -40,7 +40,7 @@ class ApplicationRecord < ActiveRecord::Base
                   {}
                 else
                   { storage: :s3,
-                    url: ':s3_domain_url',
+                    # url: ':s3_domain_url',
                     path: path,
                     s3_region: 'sa-east-1',
                     s3_credentials: { bucket: bucket,
